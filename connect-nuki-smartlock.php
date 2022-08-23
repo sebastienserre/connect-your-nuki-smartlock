@@ -6,16 +6,22 @@
  * Author: Sébastien SERRE
  * Author URI: https://thivinfo.com
  * Text Domain: connect-nuki-smartlock
- * Domain Path: /languages/
  * Version: 0.1.0
  **/
 
 namespace Nuki;
 
+use Nuki\API\api;
+
 class Connect_Nuki_Smartlock {
 	public function init(){
-		add_action( 'plugins_loaded', array( $this, 'define_constantes' ) );
-		add_action( 'plugins_loaded', array( $this, 'load_files' ) );
+		register_activation_hook( __FILE__, array( $this, 'activate' ) );
+		register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
+
+		add_action( 'plugins_loaded', array( $this, 'define_constantes' ), 10 );
+		add_action( 'plugins_loaded', array( $this, 'load_files' ), 15 );
+
+		add_filter( 'cron_schedules' , array( $this, 'create_schedule' ) );
 	}
 
 	public function define_constantes(){
@@ -32,6 +38,25 @@ class Connect_Nuki_Smartlock {
 			}
 		}
 	}
+
+	public function create_schedule( $schedules ){
+		$schedules['five_minutes'] = array(
+			'interval' => 300,
+			'display'  => esc_html__( 'Every Five Minutes', 'connect-nuki-smartlock' ), );
+		return $schedules;
+	}
+
+	public function activate(){
+		if ( ! wp_next_scheduled( 'nuki_cron_hook' ) ) {
+			wp_schedule_event( time(), 'five_minutes', 'nuki_cron_hook' );
+		}
+	}
+
+	public function deactivate(){
+		$timestamp = wp_next_scheduled( 'nuki_cron_hook' );
+		wp_unschedule_event( $timestamp, 'nuki_cron_hook' );
+	}
+
 }
 $nuki = new Connect_Nuki_Smartlock();
 $nuki->init();
