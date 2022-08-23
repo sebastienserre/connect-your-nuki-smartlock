@@ -28,16 +28,16 @@ function nukiwp__settings_init(  ) {
 	);
 
 	add_settings_field(
-		'nukiwp__text_field_0',
+		'apikey',
 		__( 'API Key', 'connect-nuki-smartlock' ),
-		'nukiwp__text_field_0_render',
+		'apikey_render',
 		'pluginPage',
 		'nukiwp__pluginPage_section'
 	);
 
 	add_settings_field(
 		'nuki-open-acion',
-		__( 'Open', 'connect-nuki-smartlock' ),
+		__( 'Quick Actions', 'connect-nuki-smartlock' ),
 		'nukiwp__open_action',
 		'pluginPage',
 		'nukiwp__pluginPage_section'
@@ -46,12 +46,11 @@ function nukiwp__settings_init(  ) {
 
 }
 
-
-function nukiwp__text_field_0_render(  ) {
+function apikey_render(  ) {
 
 	$options = get_option( 'nukiwp__settings' );
 	?>
-	<input type='text' name='nukiwp__settings[nukiwp__text_field_0]' value='<?php echo $options['nukiwp__text_field_0']; ?>'>
+	<input type='text' name='nukiwp__settings[apikey]' value='<?php echo $options['apikey']; ?>'>
 	<?php
 
 }
@@ -83,7 +82,22 @@ function nukiwp__options_page(  ) {
 }
 
 function nukiwp__open_action(){
+	$unlock_url = add_query_arg(
+		array(
+                'page' => 'connect_your_nuki_smartlock',
+			'nuki-action' => 'unlock',
+		),
+        admin_url('options-general.php'),
+	);
+	$lock_url = add_query_arg(
+		array(
+			'page' => 'connect_your_nuki_smartlock',
+			'nuki-action' => 'lock',
+		),
+		admin_url('options-general.php'),
+	);
     ?>
-    <button>Open the Door</button>
+    <a href="<?php echo $lock_url; ?>">Open the Door</a><br/>
+    <a href="<?php echo $unlock_url; ?>">Close the Door</a>
 <?php
 }
