@@ -3,8 +3,8 @@
 namespace Nuki\API;
 class api {
 
-	private $apikey;
-	private $settings;
+	public $apikey;
+	public $settings;
 	public $remote_url;
 	private $smartlockID;
 
