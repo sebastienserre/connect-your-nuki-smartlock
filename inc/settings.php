@@ -84,7 +84,7 @@ function nukiwp__options_page(  ) {
 function nukiwp__open_action(){
     $options = nukiwp_time_selector();
 ?>
-    <select name='nukiwp__settings[start-hour]'>
+    <select name='nukiwp__settings[start-autolock]'>
         <?php
         foreach ( $options as $option ){
             echo $option;
@@ -96,7 +96,7 @@ function nukiwp__open_action(){
     _e( 'and', 'connect-nuki-smartlock');
 	$options = nukiwp_time_selector( 'end' );
 	?>
-    <select name='nukiwp__settings[end-hour]'>
+    <select name='nukiwp__settings[end-autolock]'>
 		<?php
 		foreach ( $options as $option ){
 			echo $option;
@@ -111,7 +111,7 @@ function nukiwp_time_selector( $hour = 'start') {
 	$minutes = array( '00', '05', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55' );
 	$nuki = new \Nuki\API\api();
 	$settings = $nuki->settings;
-    $selected_hour = $settings[$hour . '-hour'];
+    $selected_hour = $settings[$hour . '-autolock'];
 	foreach ( $hours as $hour ) {
 		foreach ( $minutes as $minute ) {
             $formatted_hour = $hour . ':' . $minute;
