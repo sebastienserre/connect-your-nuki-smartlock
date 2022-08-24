@@ -36,14 +36,6 @@ function nukiwp__settings_init(  ) {
 	);
 
 	add_settings_field(
-		'nuki-open-auto-lock',
-		__( 'Autolock between', 'connect-nuki-smartlock' ),
-		'nukiwp__open_action',
-		'pluginPage',
-		'nukiwp__pluginPage_section'
-	);
-
-	add_settings_field(
 		'nuki-smartlcok-managed',
 		__( 'Smartlock to manage', 'connect-nuki-smartlock' ),
 		'nukiwp__manage_smartlock',
@@ -51,7 +43,13 @@ function nukiwp__settings_init(  ) {
 		'nukiwp__pluginPage_section'
 	);
 
-
+	add_settings_field(
+		'nuki-open-auto-lock',
+		__( 'Autolock between', 'connect-nuki-smartlock' ),
+		'nukiwp__open_action',
+		'pluginPage',
+		'nukiwp__pluginPage_section'
+	);
 }
 
 function apikey_render(  ) {
