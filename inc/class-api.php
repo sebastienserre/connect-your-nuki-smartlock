@@ -54,10 +54,8 @@ class api {
 	}
 
 	public function get_smartlock_id(){
-		$smartlocks = $this->get_smartlock();
-		foreach ( $smartlocks as $smartlock ) {
-			$this->smartlockID = $smartlock['smartlockId'];
-		}
+		$settings = $this->settings;
+		$this->smartlockID = $settings['smartlock-managed'];
 		return $this->smartlockID;
 	}
 
