@@ -84,4 +84,12 @@ class api {
 		$result = $this->api_call( $url, 'post' );
 		return $result;
 	}
+
+	public function get_state(){
+		$smartlocks = $this->get_smartlock();
+		foreach ( $smartlocks as $smartlock ){
+			$state = $smartlock['state']['state'];
+		}
+		return $state;
+	}
 }
