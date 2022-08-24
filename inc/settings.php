@@ -43,6 +43,14 @@ function nukiwp__settings_init(  ) {
 		'nukiwp__pluginPage_section'
 	);
 
+	add_settings_field(
+		'nuki-smartlcok-managed',
+		__( 'Smartlock to manage', 'connect-nuki-smartlock' ),
+		'nukiwp__manage_smartlock',
+		'pluginPage',
+		'nukiwp__pluginPage_section'
+	);
+
 
 }
 
@@ -119,4 +127,20 @@ function nukiwp_time_selector( $hour = 'start') {
 		}
 	}
     return $options;
+}
+
+function nukiwp__manage_smartlock(){
+    $nuki = new \Nuki\API\api();
+    $smartlocks = $nuki->get_smartlock();
+    $settings = $nuki->settings;
+    $selected_smartlock = $settings['smartlock-managed'];
+	?>
+    <select name='nukiwp__settings[smartlock-managed]'>
+		<?php
+		foreach ( $smartlocks as $smartlock ){
+			echo '<option value="'. $smartlock['smartlockId'] . '"' . selected( $selected_smartlock, $smartlock['smartlockId'], false ). '>' . $smartlock['name'] . '</option>';
+		}
+		?>
+    </select>
+	<?php
 }
