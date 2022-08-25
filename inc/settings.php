@@ -44,6 +44,14 @@ function nukiwp__settings_init(  ) {
 	);
 
 	add_settings_field(
+		'nuki-smartlovk-autolock-activated',
+		__( 'Enable autolock', 'connect-nuki-smartlock' ),
+		'nukiwp__enable_autolock',
+		'pluginPage',
+		'nukiwp__pluginPage_section'
+	);
+
+	add_settings_field(
 		'nuki-open-auto-lock',
 		__( 'Autolock between', 'connect-nuki-smartlock' ),
 		'nukiwp__open_action',
@@ -57,6 +65,15 @@ function apikey_render(  ) {
 	$options = get_option( 'nukiwp__settings' );
 	?>
 	<input type='text' name='nukiwp__settings[apikey]' value='<?php echo $options['apikey']; ?>'>
+	<?php
+
+}
+
+function nukiwp__enable_autolock(  ) {
+
+	$options = get_option( 'nukiwp__settings' );
+	?>
+    <input type='checkbox' name='nukiwp__settings[autolock_activated]' value='1' <?php checked( $options['autolock_activated'], '1') ?>>
 	<?php
 
 }
