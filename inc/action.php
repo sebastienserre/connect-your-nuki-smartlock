@@ -20,8 +20,9 @@ function nuki_action() {
 	}
 }
 
-// https://stackoverflow.com/questions/26372487/php-if-an-hour-is-between-two-other-hours
-
+/**
+ * @see https://thevaluable.dev/php-datetime-create-compare-format/#comparing-datetimes
+ */
 add_action( 'nuki_cron_hook', 'nuki_cron_check');
 //add_action( 'admin_init', 'nuki_cron_check');
 function nuki_cron_check() {
@@ -31,13 +32,10 @@ function nuki_cron_check() {
 	$end = $settings['end-autolock'];
 
 	$timezone = wp_timezone();
-	$currentTime = wp_date( 'U', time(), $timezone ); // 1661355604 - 24/08/2022 17:40:04
 
-	$start = DateTime::createFromFormat( 'G:i', $start, $timezone ); // $start->date = 2022-08-24 21:00:00.000000
-	//$start1 = $start->getTimestamp(); // 1661374800 - 24/08/2022 23:00:00
-	$startTime = wp_date( 'U', strtotime( $start ), $timezone ); // 1661374800 - 24/08/2022 23:00:00
-
-	$endTime = wp_date( 'U', strtotime( $end ), $timezone );
+	$startTime = DateTime::createFromFormat( 'G:i', $start, $timezone );
+	$endTime = DateTime::createFromFormat( 'G:i', $end, $timezone );
+	$currentTime = new DateTime( 'now', $timezone );
 
 	//to avoid difficulties with day change. I'm checking if I'm outside the day part.
 	if ( $currentTime >= $startTime || $currentTime <= $endTime ) {
