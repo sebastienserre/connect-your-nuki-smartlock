@@ -6,11 +6,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * @see https://thevaluable.dev/php-datetime-create-compare-format/#comparing-datetimes
  */
-add_action( 'nuki_cron_hook', 'nuki_cron_check');
-//add_action( 'admin_init', 'nuki_cron_check');
+//add_action( 'nuki_cron_hook', 'nuki_cron_check');
+add_action( 'admin_init', 'nuki_cron_check');
 function nuki_cron_check() {
 	$nuki = new \Nuki\API\api();
 	$settings = $nuki->get_settings();
+
+	// bail if feature not activated.
+	if ( empty( $settings['autolock_activated'] ) || '1' !== $settings['autolock_activated'] ){
+		return;
+	}
+
 	$start = $settings['start-autolock'];
 	$end = $settings['end-autolock'];
 
