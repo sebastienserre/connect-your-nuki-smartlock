@@ -72,6 +72,9 @@ function apikey_render(  ) {
 function nukiwp__enable_autolock(  ) {
 
 	$options = get_option( 'nukiwp__settings' );
+    if ( empty( $options['autolock_activated'] ) ){
+	    $options['autolock_activated'] = '0';
+    }
 	?>
     <input type='checkbox' name='nukiwp__settings[autolock_activated]' value='1' <?php checked( $options['autolock_activated'], '1') ?>>
 	<?php
