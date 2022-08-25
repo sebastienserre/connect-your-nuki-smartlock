@@ -27,7 +27,7 @@ add_action( 'nuki_cron_hook', 'nuki_cron_check');
 //add_action( 'admin_init', 'nuki_cron_check');
 function nuki_cron_check() {
 	$nuki = new \Nuki\API\api();
-	$settings = $nuki->settings;
+	$settings = $nuki->get_settings();
 	$start = $settings['start-autolock'];
 	$end = $settings['end-autolock'];
 
