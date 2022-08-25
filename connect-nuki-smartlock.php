@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Connect your Nuki Smartlock !
  * Plugin URI: https://www.thivinfo.com
- * Description:
+ * Description: Connect your Nuki Smartlock to your WordPress and manage it!
  * Author: Sébastien SERRE
  * Author URI: https://thivinfo.com
  * Text Domain: connect-nuki-smartlock
