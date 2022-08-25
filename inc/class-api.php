@@ -3,8 +3,8 @@
 namespace Nuki\API;
 class api {
 
-	public $apikey;
-	public $settings;
+	private $apikey;
+	private $settings;
 	public $remote_url;
 	private $smartlockID;
 
@@ -17,6 +17,14 @@ class api {
 		$this->apikey = $this->settings['apikey'];
 		$this->remote_url = 'https://api.nuki.io';
 		$this->smartlockID = $this->get_smartlock_id();
+	}
+
+	public function get_apikey(){
+		return $this->apikey;
+	}
+
+	public function get_settings(){
+		return $this->settings;
 	}
 
 	public function api_call( $url, $method='get' ){
