@@ -1,6 +1,11 @@
 <?php
 
 namespace Nuki\API;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+} // Exit if accessed directly.
+
 class api {
 
 	private $apikey;

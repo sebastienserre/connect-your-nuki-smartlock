@@ -11,6 +11,10 @@
 
 namespace Nuki;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+} // Exit if accessed directly.
+
 use Nuki\API\api;
 
 class Connect_Nuki_Smartlock {
