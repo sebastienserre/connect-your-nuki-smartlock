@@ -103,4 +103,25 @@ class api {
 		}
 		return $state;
 	}
+
+	/**
+	 * @see https://developer.nuki.io/t/web-api-example-manage-pin-codes-for-your-nuki-keypad/54
+	 */
+	public function generate_pin( $pin_name ){
+		$size = 6;
+		$i = 1;
+		$pin = '';
+		while ( $i <= $size ) {
+			if ( 1 === $i || 2 === $i ) {
+				$digit = rand( 3, 9, );
+				$pin .= $digit;
+			} else {
+				$digit = rand( 1, 9, );
+				$pin .= $digit;
+			}
+			$i++;
+		}
+		$pin = array( $pin_name => $pin );
+		return $pin;
+	}
 }
