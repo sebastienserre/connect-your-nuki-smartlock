@@ -30,7 +30,7 @@ function nukiwp__settings_init(  ) {
 	add_settings_field(
 		'apikey',
 		__( 'API Key', 'connect-nuki-smartlock' ),
-		'apikey_render',
+		'nukiwp_apikey_render',
 		'pluginPage',
 		'nukiwp__pluginPage_section'
 	);
@@ -46,7 +46,7 @@ function nukiwp__settings_init(  ) {
 	add_settings_field(
 		'nuki-smartlovk-autolock-activated',
 		__( 'Enable autolock', 'connect-nuki-smartlock' ),
-		'nukiwp__enable_autolock',
+		'nukiwp_enable_autolock',
 		'pluginPage',
 		'nukiwp__pluginPage_section'
 	);
@@ -60,16 +60,16 @@ function nukiwp__settings_init(  ) {
 	);
 }
 
-function apikey_render(  ) {
+function nukiwp_apikey_render(  ) {
 
 	$options = get_option( 'nukiwp__settings' );
 	?>
-	<input type='text' name='nukiwp__settings[apikey]' value='<?php echo $options['apikey']; ?>'>
+	<input type='text' name='nukiwp__settings[apikey]' value='<?php echo esc_attr( $options['apikey'] ); ?>'>
 	<?php
 
 }
 
-function nukiwp__enable_autolock(  ) {
+function nukiwp_enable_autolock(  ) {
 
 	$options = get_option( 'nukiwp__settings' );
     if ( empty( $options['autolock_activated'] ) ){
@@ -80,14 +80,6 @@ function nukiwp__enable_autolock(  ) {
 	<?php
 
 }
-
-
-function nukiwp__settings_section_callback(  ) {
-
-	echo __( 'This section description', 'connect-nuki-smartlock' );
-
-}
-
 
 function nukiwp__options_page(  ) {
 
@@ -113,19 +105,19 @@ function nukiwp__open_action(){
     <select name='nukiwp__settings[start-autolock]'>
         <?php
         foreach ( $options as $option ){
-            echo $option;
+            echo $option; // value escaped in nukiwp_time_selector()
         }
         ?>
     </select>
 <?php
     $options = '';
-    _e( 'and', 'connect-nuki-smartlock');
+    esc_attr_e( 'and', 'connect-nuki-smartlock');
 	$options = nukiwp_time_selector( 'end' );
 	?>
     <select name='nukiwp__settings[end-autolock]'>
 		<?php
 		foreach ( $options as $option ){
-			echo $option;
+			echo $option; // value escaped in nukiwp_time_selector()
 		}
 		?>
     </select>
@@ -141,7 +133,7 @@ function nukiwp_time_selector( $hour = 'start') {
 	foreach ( $hours as $hour ) {
 		foreach ( $minutes as $minute ) {
             $formatted_hour = $hour . ':' . $minute;
-			$options[] = '<option value="'. $formatted_hour . '"' . selected( $selected_hour, $formatted_hour, false ). '>' . $formatted_hour . '</option>';
+			$options[] = '<option value="'. esc_attr( $formatted_hour ). '"' . selected( $selected_hour, $formatted_hour, false ). '>' . $formatted_hour . '</option>';
 		}
 	}
     return $options;
@@ -156,7 +148,7 @@ function nukiwp__manage_smartlock(){
     <select name='nukiwp__settings[smartlock-managed]'>
 		<?php
 		foreach ( $smartlocks as $smartlock ){
-			echo '<option value="'. $smartlock['smartlockId'] . '"' . selected( $selected_smartlock, $smartlock['smartlockId'], false ). '>' . $smartlock['name'] . '</option>';
+			echo '<option value="'. esc_attr( $smartlock['smartlockId'] ) . '"' . selected( $selected_smartlock, $smartlock['smartlockId'], false ). '>' . $smartlock['name'] . '</option>';
 		}
 		?>
     </select>
