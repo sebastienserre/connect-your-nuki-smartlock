@@ -72,6 +72,12 @@ class api {
 		return $this->smartlockID;
 	}
 
+	public function get_smartlock_details( $smartlock_ID ){
+		$url = $this->remote_url . '/smartlock/' . $smartlock_ID;
+		$results = $this->api_call( $url, 'get' );
+		return $results;
+	}
+
 	public function lock(){
 		$args = array(
 			'url' => $this->remote_url,
