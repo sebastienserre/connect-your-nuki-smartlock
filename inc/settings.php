@@ -16,6 +16,8 @@ function nukiwp__add_admin_menu(  ) {
 
 function nukiwp__settings_init(  ) {
 
+	$options = get_option( 'nukiwp__settings' );
+    $token = $options['apikey'];
 	register_setting( 'pluginPage', 'nukiwp__settings' );
 
 	add_settings_section(
@@ -29,35 +31,37 @@ function nukiwp__settings_init(  ) {
 
 	add_settings_field(
 		'apikey',
-		__( 'API Key', 'connect-nuki-smartlock' ),
+		__( 'Token', 'connect-nuki-smartlock' ),
 		'nukiwp_apikey_render',
 		'pluginPage',
 		'nukiwp__pluginPage_section'
 	);
 
-	add_settings_field(
-		'nuki-smartlcok-managed',
-		__( 'Smartlock to manage', 'connect-nuki-smartlock' ),
-		'nukiwp__manage_smartlock',
-		'pluginPage',
-		'nukiwp__pluginPage_section'
-	);
+    if ( ! empty( $token ) ) {
+	    add_settings_field(
+		    'nuki-smartlcok-managed',
+		    __( 'Smartlock to manage', 'connect-nuki-smartlock' ),
+		    'nukiwp__manage_smartlock',
+		    'pluginPage',
+		    'nukiwp__pluginPage_section'
+	    );
 
-	add_settings_field(
-		'nuki-smartlovk-autolock-activated',
-		__( 'Enable autolock', 'connect-nuki-smartlock' ),
-		'nukiwp_enable_autolock',
-		'pluginPage',
-		'nukiwp__pluginPage_section'
-	);
+	    add_settings_field(
+		    'nuki-smartlovk-autolock-activated',
+		    __( 'Enable autolock', 'connect-nuki-smartlock' ),
+		    'nukiwp_enable_autolock',
+		    'pluginPage',
+		    'nukiwp__pluginPage_section'
+	    );
 
-	add_settings_field(
-		'nuki-open-auto-lock',
-		__( 'Autolock between', 'connect-nuki-smartlock' ),
-		'nukiwp__open_action',
-		'pluginPage',
-		'nukiwp__pluginPage_section'
-	);
+	    add_settings_field(
+		    'nuki-open-auto-lock',
+		    __( 'Autolock between', 'connect-nuki-smartlock' ),
+		    'nukiwp__open_action',
+		    'pluginPage',
+		    'nukiwp__pluginPage_section'
+	    );
+    }
 }
 
 function nukiwp_apikey_render(  ) {
