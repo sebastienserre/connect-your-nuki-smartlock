@@ -8,33 +8,36 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 add_action( 'nuki_cron_hook', 'nukiwp_cron_check');
 //add_action( 'admin_init', 'nuki_cron_check');
-function nukiwp_cron_check() {
-	$nuki = new \Nuki\API\api();
-	$settings = $nuki->get_settings();
 
-	// bail if feature not activated.
-	if ( empty( $settings['autolock_activated'] ) || '1' !== $settings['autolock_activated'] ){
-		return;
-	}
+if ( ! function_exists( 'nukiwp_cron_check' ) ) {
+	function nukiwp_cron_check() {
+		$nuki     = new \Nuki\API\api();
+		$settings = $nuki->get_settings();
 
-	$start = $settings['start-autolock'];
-	$end = $settings['end-autolock'];
+		// bail if feature not activated.
+		if ( empty( $settings['autolock_activated'] ) || '1' !== $settings['autolock_activated'] ) {
+			return;
+		}
 
-	$timezone = wp_timezone();
+		$start = $settings['start-autolock'];
+		$end   = $settings['end-autolock'];
 
-	$startTime = DateTime::createFromFormat( 'G:i', $start, $timezone );
-	$endTime = DateTime::createFromFormat( 'G:i', $end, $timezone );
-	$currentTime = new DateTime( 'now', $timezone );
+		$timezone = wp_timezone();
 
-	//to avoid difficulties with day change. I'm checking if I'm outside the day part.
-	if ( $currentTime >= $startTime || $currentTime <= $endTime ) {
-		$nuki  = new \Nuki\API\api();
-		$state = $nuki->get_state();
-		if ( 3 === $state) {
+		$startTime   = DateTime::createFromFormat( 'G:i', $start, $timezone );
+		$endTime     = DateTime::createFromFormat( 'G:i', $end, $timezone );
+		$currentTime = new DateTime( 'now', $timezone );
+
+		//to avoid difficulties with day change. I'm checking if I'm outside the day part.
+		if ( $currentTime >= $startTime || $currentTime <= $endTime ) {
+			$nuki  = new \Nuki\API\api();
+			$state = $nuki->get_state();
+			if ( 3 === $state ) {
 				$nuki->lock();
-				error_log( wp_date( 'j F Y, G:i') . ': Door locked');
-		} else {
-			error_log( wp_date( 'j F Y, G:i') . ': Door already locked');
+				error_log( wp_date( 'j F Y, G:i' ) . ': Door locked' );
+			} else {
+				error_log( wp_date( 'j F Y, G:i' ) . ': Door already locked' );
+			}
 		}
 	}
 }
