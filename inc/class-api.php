@@ -68,6 +68,9 @@ class api {
 
 	public function get_smartlock_id(){
 		$settings = $this->settings;
+		if ( empty( $settings['smartlock-managed'] ) ){
+			return false;
+		}
 		$this->smartlockID = $settings['smartlock-managed'];
 		return $this->smartlockID;
 	}
