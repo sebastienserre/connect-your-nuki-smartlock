@@ -110,24 +110,26 @@ if ( ! function_exists( 'nukiwp__options_page' ) ) {
 
 if ( ! function_exists( 'nukiwp__open_action' ) ) {
 	function nukiwp__open_action() {
-		$options = nukiwp_time_selector();
+		$formatted_hours = nukiwp_time_selector();
+		$nuki          = new \Nuki\API\api();
+		$settings      = $nuki->get_settings();
+		$selected_hour = $settings[ 'start-autolock' ];
 		?>
         <select name='nukiwp__settings[start-autolock]'>
 			<?php
-			foreach ( $options as $option ) {
-				echo $option; // value escaped in nukiwp_time_selector()
+			foreach ( $formatted_hours as $formatted_hour ) {
+				echo '<option value="' . esc_attr( $formatted_hour ) . '"' . selected( $selected_hour, $formatted_hour, false ) . '>' . $formatted_hour . '</option>';
 			}
 			?>
         </select>
 		<?php
-		$options = '';
 		esc_attr_e( 'and', 'connect-nuki-smartlock' );
-		$options = nukiwp_time_selector( 'end' );
+		$selected_hour = $settings[ 'end-autolock' ];
 		?>
         <select name='nukiwp__settings[end-autolock]'>
 			<?php
-			foreach ( $options as $option ) {
-				echo $option; // value escaped in nukiwp_time_selector()
+			foreach ( $formatted_hours as $formatted_hour ) {
+                echo '<option value="' . esc_attr( $formatted_hour ) . '"' . selected( $selected_hour, $formatted_hour, false ) . '>' . $formatted_hour . '</option>';
 			}
 			?>
         </select>
@@ -136,7 +138,7 @@ if ( ! function_exists( 'nukiwp__open_action' ) ) {
 }
 
 if ( ! function_exists( 'nukiwp_time_selector' ) ) {
-	function nukiwp_time_selector( $hour = 'start' ) {
+	function nukiwp_time_selector() {
 		$hours         = array(
 			'00',
 			'01',
@@ -164,17 +166,14 @@ if ( ! function_exists( 'nukiwp_time_selector' ) ) {
 			'23'
 		);
 		$minutes       = array( '00', '05', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55' );
-		$nuki          = new \Nuki\API\api();
-		$settings      = $nuki->get_settings();
-		$selected_hour = $settings[ $hour . '-autolock' ];
 		foreach ( $hours as $hour ) {
 			foreach ( $minutes as $minute ) {
-				$formatted_hour = $hour . ':' . $minute;
-				$options[]      = '<option value="' . esc_attr( $formatted_hour ) . '"' . selected( $selected_hour, $formatted_hour, false ) . '>' . $formatted_hour . '</option>';
+				$formatted_hours[] = $hour . ':' . $minute;
+			//	$options[]      = '<option value="' . esc_attr( $formatted_hour ) . '"' . selected( $selected_hour, $formatted_hour, false ) . '>' . $formatted_hour . '</option>';
 			}
 		}
 
-		return $options;
+		return $formatted_hours;
 	}
 }
 
