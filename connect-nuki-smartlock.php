@@ -6,7 +6,7 @@
  * Author: Sébastien SERRE
  * Author URI: https://thivinfo.com
  * Text Domain: connect-nuki-smartlock
- * Version: 0.1.0
+ * Version: 0.2.0
  **/
 
 namespace Nuki;
