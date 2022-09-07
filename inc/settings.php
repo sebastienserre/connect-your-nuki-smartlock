@@ -118,7 +118,7 @@ if ( ! function_exists( 'nukiwp__open_action' ) ) {
         <select name='nukiwp__settings[start-autolock]'>
 			<?php
 			foreach ( $formatted_hours as $formatted_hour ) {
-				echo '<option value="' . esc_attr( $formatted_hour ) . '"' . selected( $selected_hour, $formatted_hour, false ) . '>' . $formatted_hour . '</option>';
+				echo '<option value="' . esc_attr( $formatted_hour ) . '"' . selected( $selected_hour, $formatted_hour, false ) . '>' . esc_attr( $formatted_hour ) . '</option>';
 			}
 			?>
         </select>
@@ -129,7 +129,7 @@ if ( ! function_exists( 'nukiwp__open_action' ) ) {
         <select name='nukiwp__settings[end-autolock]'>
 			<?php
 			foreach ( $formatted_hours as $formatted_hour ) {
-                echo '<option value="' . esc_attr( $formatted_hour ) . '"' . selected( $selected_hour, $formatted_hour, false ) . '>' . $formatted_hour . '</option>';
+                echo '<option value="' . esc_attr( $formatted_hour ) . '"' . selected( $selected_hour, $formatted_hour, false ) . '>' . esc_attr( $formatted_hour ) . '</option>';
 			}
 			?>
         </select>
@@ -187,7 +187,7 @@ if ( ! function_exists( 'nukiwp__manage_smartlock' ) ) {
         <select name='nukiwp__settings[smartlock-managed]'>
 			<?php
 			foreach ( $smartlocks as $smartlock ) {
-				echo '<option value="' . esc_attr( $smartlock['smartlockId'] ) . '"' . selected( $selected_smartlock, $smartlock['smartlockId'], false ) . '>' . $smartlock['name'] . '</option>';
+				echo '<option value="' . esc_attr( $smartlock['smartlockId'] ) . '"' . selected( $selected_smartlock, $smartlock['smartlockId'], false ) . '>' . esc_attr( $smartlock['name'] ) . '</option>';
 			}
 			?>
         </select>
