@@ -22,7 +22,7 @@ function nukiwp__settings_init(  ) {
 
 	add_settings_section(
 		'nukiwp__pluginPage_section',
-		/*__( 'Your section description', 'connect-nuki-smartlock' ),*/
+		/*__( 'Your section description', 'connect-your-nuki-smartlock' ),*/
         '',
 		/*'nukiwp__settings_section_callback',*/
         '',
@@ -31,7 +31,7 @@ function nukiwp__settings_init(  ) {
 
 	add_settings_field(
 		'apikey',
-		__( 'Token', 'connect-nuki-smartlock' ),
+		__( 'Token', 'connect-your-nuki-smartlock' ),
 		'nukiwp_apikey_render',
 		'pluginPage',
 		'nukiwp__pluginPage_section'
@@ -40,7 +40,7 @@ function nukiwp__settings_init(  ) {
     if ( ! empty( $token ) ) {
 	    add_settings_field(
 		    'nuki-smartlcok-managed',
-		    __( 'Smartlock to manage', 'connect-nuki-smartlock' ),
+		    __( 'Smartlock to manage', 'connect-your-nuki-smartlock' ),
 		    'nukiwp__manage_smartlock',
 		    'pluginPage',
 		    'nukiwp__pluginPage_section'
@@ -48,7 +48,7 @@ function nukiwp__settings_init(  ) {
 
 	    add_settings_field(
 		    'nuki-smartlovk-autolock-activated',
-		    __( 'Enable autolock', 'connect-nuki-smartlock' ),
+		    __( 'Enable autolock', 'connect-your-nuki-smartlock' ),
 		    'nukiwp_enable_autolock',
 		    'pluginPage',
 		    'nukiwp__pluginPage_section'
@@ -56,7 +56,7 @@ function nukiwp__settings_init(  ) {
 
 	    add_settings_field(
 		    'nuki-open-auto-lock',
-		    __( 'Autolock between', 'connect-nuki-smartlock' ),
+		    __( 'Autolock between', 'connect-your-nuki-smartlock' ),
 		    'nukiwp__open_action',
 		    'pluginPage',
 		    'nukiwp__pluginPage_section'
@@ -90,7 +90,7 @@ function nukiwp__options_page(  ) {
 	?>
 	<form action='options.php' method='post'>
 
-		<h2><?php _e( 'Connect your Nuki SmartLock', 'connect-nuki-smartlock'); ?></h2>
+		<h2><?php _e( 'Connect your Nuki SmartLock', 'connect-your-nuki-smartlock'); ?></h2>
 
 		<?php
 		settings_fields( 'pluginPage' );
@@ -115,7 +115,7 @@ function nukiwp__open_action(){
     </select>
 <?php
     $options = '';
-    esc_attr_e( 'and', 'connect-nuki-smartlock');
+    esc_attr_e( 'and', 'connect-your-nuki-smartlock');
 	$options = nukiwp_time_selector( 'end' );
 	?>
     <select name='nukiwp__settings[end-autolock]'>

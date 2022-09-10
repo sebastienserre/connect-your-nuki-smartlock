@@ -1,12 +1,11 @@
 <?php
 /**
  * Plugin Name: Connect your Nuki Smartlock !
- * Plugin URI: https://www.thivinfo.com
+ * Plugin URI: https://nuki-smartlock-for-wp.com/
  * Description: Connect your Nuki Smartlock to your WordPress and manage it!
- * Author: Sébastien SERRE
- * Author URI: https://thivinfo.com
- * Text Domain: connect-nuki-smartlock
- * Version: 0.2.0
+ * Author: Nuki Smartlock for WP
+ * Author URI: https://nuki-smartlock-for-wp.com/
+ * Version: 0.2.1
  **/
 
 namespace Nuki;
@@ -47,7 +46,7 @@ if ( ! class_exists( 'Connect_Nuki_Smartlock' ) ) {
 		public function create_schedule( $schedules ) {
 			$schedules['five_minutes'] = array(
 				'interval' => 300,
-				'display'  => esc_html__( 'Every Five Minutes', 'connect-nuki-smartlock' ),
+				'display'  => esc_html__( 'Every Five Minutes', 'connect-your-nuki-smartlock' ),
 			);
 
 			return $schedules;
