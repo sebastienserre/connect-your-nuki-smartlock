@@ -9,7 +9,7 @@ add_action( 'admin_init', 'nukiwp__settings_init' );
 
 function nukiwp__add_admin_menu(  ) {
 
-	add_menu_page( __('Connect your Nuki SmartLock', 'connect-your-nuki-smartlock' ), __('Connect your Nuki SmartLock', 'connect-your-nuki-smartlock' ), 'manage_options', 'connect_your_nuki_smartlock', 'nukiwp__options_page' );
+	add_menu_page( __('Nuki Settings', 'connect-your-nuki-smartlock' ), __('Nuki Settings', 'connect-your-nuki-smartlock' ), 'manage_options', 'connect_your_nuki_smartlock', 'nukiwp__options_page' );
 
 }
 
