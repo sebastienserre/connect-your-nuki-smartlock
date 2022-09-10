@@ -5,7 +5,7 @@ Donate link: https://github.com/sponsors/sebastienserre/
 Requires at least: 4.7
 Tested up to: 6.0
 Requires PHP: 7.0
-Stable tag: 0.2.1
+Stable tag: 0.2.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -31,6 +31,10 @@ No, I\'m an independent WordPress developer, owning a Nuki Smartlock 3.0 Pro.
 1. Settings
 
 == Changelog ==
+= 0.2.2 -- 10 September 2022 =
+- Improve i18n
+- Correct settings name
+
 = 0.2.1 -- 10 September 2022 =
 - Correct textdomain
 
