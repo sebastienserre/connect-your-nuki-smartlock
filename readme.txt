@@ -24,7 +24,10 @@ You need to get an API token to https://web.nuki.io/#/login
 Official doc to get it: https://developer.nuki.io/page/nuki-web-api-1-4/3#heading--api-tokens
 
 = Does this plugin developed by Nuki ? =
-No, I\'m an independent WordPress developer, owning a Nuki Smartlock 3.0 Pro.
+No, I'm an independent WordPress developer, owning a Nuki Smartlock 3.0 Pro.
+
+= I've an idea to improve this plugin ? =
+Great! share your idea at our [Ideas page](https://nuki-smartlock-for-wp.com/ideas)
 
 
 == Screenshots ==
