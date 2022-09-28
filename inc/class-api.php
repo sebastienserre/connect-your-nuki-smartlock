@@ -91,8 +91,13 @@ if ( ! class_exists( 'api' ) ) {
 		}
 
 		public function get_smartlock_details( $smartlock_ID ) {
-			$url     = $this->remote_url . '/smartlock/' . $smartlock_ID;
-			$results = $this->api_call( $url, 'get' );
+			$results = get_transient( 'nukiData['.$smartlock_ID.']' );
+
+			if (empty( $results ) ) {
+				$url     = $this->remote_url . '/smartlock/' . $smartlock_ID;
+				$results = $this->api_call( $url, 'get' );
+				set_transient( 'nukiData[' . $smartlock_ID . ']', $results, HOUR_IN_SECONDS * 24 );
+			}
 
 			return $results;
 		}
