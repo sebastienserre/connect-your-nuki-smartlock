@@ -91,13 +91,10 @@ if ( ! class_exists( 'api' ) ) {
 		}
 
 		public function get_smartlock_details( $smartlock_ID ) {
-			$results = get_transient( 'nukiData['.$smartlock_ID.']' );
+			$url     = $this->remote_url . '/smartlock/' . $smartlock_ID;
+			$results = $this->api_call( $url, 'get' );
+			set_transient( 'nukiData[' . $smartlock_ID . ']', $results, HOUR_IN_SECONDS * 24 );
 
-			if (empty( $results ) ) {
-				$url     = $this->remote_url . '/smartlock/' . $smartlock_ID;
-				$results = $this->api_call( $url, 'get' );
-				set_transient( 'nukiData[' . $smartlock_ID . ']', $results, HOUR_IN_SECONDS * 24 );
-			}
 
 			return $results;
 		}
@@ -180,6 +177,72 @@ if ( ! class_exists( 'api' ) ) {
 			$result = $this->api_call( $url, 'put', $body );
 
 			return $result;
+		}
+
+		public function state( $code, $type ) {
+			switch ( $type ) {
+				case 0:
+				case 3:
+				case 4:
+					switch ( $code ) {
+						case 0:
+							return __( 'uncalibrated', 'connect-your-nuki-smartlock' );
+							break;
+						case 1:
+							return __( 'locked', 'connect-your-nuki-smartlock' );
+							break;
+						case 2:
+							return __( 'unlocking', 'connect-your-nuki-smartlock' );
+							break;
+						case 3:
+							return __( 'unlocked', 'connect-your-nuki-smartlock' );
+							break;
+						case 4:
+							return __( 'locking', 'connect-your-nuki-smartlock' );
+							break;
+						case 5:
+							return __( 'unlatched', 'connect-your-nuki-smartlock' );
+							break;
+						case 6:
+							return __( "unlocked (lock 'n' go)", 'connect-your-nuki-smartlock' );
+							break;
+						case 7:
+							return __( "unlatching", 'connect-your-nuki-smartlock' );
+							break;
+						case 254:
+							return __( "motor blocked", 'connect-your-nuki-smartlock' );
+							break;
+						case 255:
+							return __( "motor blocked", 'connect-your-nuki-smartlock' );
+							break;
+					}
+					break;
+				case 2:
+					switch ( $code ){
+						case 0:
+							return __( "untrained", 'connect-your-nuki-smartlock' );
+							break;
+						case 1:
+							return __( "online", 'connect-your-nuki-smartlock' );
+							break;
+						case 3:
+							return __( "ring to open active", 'connect-your-nuki-smartlock' );
+							break;
+						case 5:
+							return __( "open", 'connect-your-nuki-smartlock' );
+							break;
+						case 7:
+							return __( "opening", 'connect-your-nuki-smartlock' );
+							break;
+						case 253:
+							return __( "boot run", 'connect-your-nuki-smartlock' );
+							break;
+						case 255:
+							return __( "undefined", 'connect-your-nuki-smartlock' );
+							break;
+					}
+					break;
+			}
 		}
 	}
 }
