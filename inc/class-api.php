@@ -140,20 +140,30 @@ if ( ! class_exists( 'api' ) ) {
 		public function generate_pin( $pin_name='' ) {
 			$size = 6;
 			$i    = 1;
-			$pin  = '';
+			$pin  = array();
 			while ( $i <= $size ) {
 				if ( 1 === $i || 2 === $i ) {
-					$digit = rand( 3, 9, );
-					$pin   .= $digit;
+					$pin[1] = $pin[2] = 0;
+					$pin[$i]   = random_int( 3, 9 );
+					if ( $pin[1] === $pin[2] ){
+						// rand with exclusion
+						in_array( ($pin[2] = random_int(3,9)), array( $pin[1]) );
+					}
 				} else {
-					$digit = rand( 1, 9, );
-					$pin   .= $digit;
+
+					$pin[$i] = random_int( 1, 9, );
+					$b = $i-1;
+					if ( $pin[$b] === $pin[$i] ){
+						// rand with exclusion
+						in_array( ( $pin[$i] = random_int(1,9) ), array( $pin[$b] ) );
+					}
 				}
 				$i ++;
 			}
-
-			return $pin;
+			ksort( $pin );
+			return implode( '', $pin );
 		}
+
 
 		public function send_pin_to_keypad( $pin_data ) {
 			$args   = array(
