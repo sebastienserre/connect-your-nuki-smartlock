@@ -11,6 +11,7 @@ class Dashboard {
 	public function init(){
 		add_action( 'wp_dashboard_setup', array( $this, 'dashboard_widget' ) );
         add_action( 'admin_init', array( $this, 'generate_pincode' ) );
+        add_action( 'admin_init', array( $this, 'delete_pincode' ) );
 	}
 
 	public function dashboard_widget() {
@@ -29,14 +30,15 @@ class Dashboard {
             $batteryState = 'critical';
         }
 
-        $generate_link = add_query_arg(
-                array(
-                        'action' => 'generate-pin',
-                    '_wpnonce' => wp_create_nonce( 'action'),
+		$generate_link = add_query_arg(
+			array(
+				'action'   => 'generate-pin',
+				'_wpnonce' => wp_create_nonce( 'action' ),
 
-                ),
-            admin_url('/'),
-        )
+			),
+			admin_url( '/' ),
+		);
+
 		?>
         <div class="nuki_dashboard">
             <h3>
@@ -83,7 +85,16 @@ class Dashboard {
                     <tr>
                         <td><?php echo $name; ?></td>
                         <td><?php echo $pin; ?></td>
-                        <td><?php _e('Delete', 'connect-your-nuki-smartlock' )?></td>
+                        <?php
+                        $delete_link = add_query_arg( array(
+	                        'action'   => 'delete-pin',
+	                        '_wpnonce' => wp_create_nonce( 'action' ),
+                            'pin_name' => $name,
+                        ),
+	                        admin_url( '/' ),
+                        );
+                        ?>
+                        <td><a href="<?php echo $delete_link ?>"><?php _e('Delete', 'connect-your-nuki-smartlock' )?></a></td>
                     </tr>
                         <?php
                 }
@@ -99,14 +110,28 @@ class Dashboard {
 		if ( empty( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'action' ) ) {
 			return;
 		}
-		if ( empty( $_GET['action'] ) && 'generate-pin' !== $_GET['action'] ) {
+		if ( ! empty( $_GET['action'] ) && 'generate-pin' === $_GET['action'] ) {
+			$user                                                                               = wp_get_current_user();
+			$username                                                                           = $user->user_login;
+			$options                                                                            = get_option( 'nukiwp__settings' );
+			$options['ondemand-pinlist'][ $username . ' ' . wp_date( 'd/m/Y H\hi s', time() ) ] = $nuki->generate_pin();
+			update_option( 'nukiwp__settings', $options );
+		}
+
+	}
+
+	function delete_pincode() {
+		if ( empty( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'action' ) ) {
 			return;
 		}
-        $user = wp_get_current_user();
-        $username  = $user->user_login;
+		if ( empty( $_GET['action'] ) || 'delete-pin' !== $_GET['action'] || empty( $_GET['pin_name'] )  ) {
+			return;
+		}
 		$options = get_option( 'nukiwp__settings' );
-		$options['ondemand-pinlist'][$username . ' ' . wp_date( 'd/m/Y H\hi s', time())] = $nuki->generate_pin();
-        update_option( 'nukiwp__settings', $options );
+        if ( isset( $options['ondemand-pinlist'][esc_attr( $_GET['pin_name'])] ) ) {
+	        unset( $options['ondemand-pinlist'][ esc_attr( $_GET['pin_name'] ) ] );
+	        update_option( 'nukiwp__settings', $options );
+        }
 
 	}
 }
