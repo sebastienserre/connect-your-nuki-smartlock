@@ -25,6 +25,8 @@ if ( ! class_exists( 'Connect_Nuki_Smartlock' ) ) {
 			add_action( 'plugins_loaded', array( $this, 'define_constantes' ), 10 );
 			add_action( 'plugins_loaded', array( $this, 'load_files' ), 15 );
 
+			add_action( 'admin_print_styles', array( $this, 'load_styles' ) );
+
 			add_filter( 'cron_schedules', array( $this, 'create_schedule' ) );
 		}
 
@@ -61,6 +63,10 @@ if ( ! class_exists( 'Connect_Nuki_Smartlock' ) ) {
 		public function deactivate() {
 			$timestamp = wp_next_scheduled( 'nuki_cron_hook' );
 			wp_unschedule_event( $timestamp, 'nuki_cron_hook' );
+		}
+
+		public function load_styles(){
+			wp_enqueue_style( 'nuki-dashboard-styles', NUKIWP_PLUGIN_URL . 'assets/css/admin-nuki.min.css');
 		}
 
 	}

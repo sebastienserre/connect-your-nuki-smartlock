@@ -137,7 +137,7 @@ if ( ! class_exists( 'api' ) ) {
 		/**
 		 * @see https://developer.nuki.io/t/web-api-example-manage-pin-codes-for-your-nuki-keypad/54
 		 */
-		public function generate_pin( $pin_name ) {
+		public function generate_pin( $pin_name='' ) {
 			$size = 6;
 			$i    = 1;
 			$pin  = '';
