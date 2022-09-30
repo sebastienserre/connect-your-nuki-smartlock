@@ -231,7 +231,7 @@ if ( ! class_exists( 'Api' ) ) {
 			);
 			while ( $i <= $size ) {
 				if ( 1 === $i || 2 === $i ) {
-					$pin[ $i ]   = random_int( 3, 9 );
+					$pin[ $i ] = random_int( 3, 9 );
 					if ( $pin[1] === $pin[2] ) {
 						// rand with exclusion
 						in_array( ( $pin[2] = random_int( 3, 9 ) ), array( $pin[1] ) );
