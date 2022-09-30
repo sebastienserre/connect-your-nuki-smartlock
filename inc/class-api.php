@@ -246,7 +246,15 @@ if ( ! class_exists( 'Api' ) ) {
 			return implode( '', $pin );
 		}
 
-		public function avoid_twice_same( $first_pin, $second_pin ){
+		/**
+		 * For security reason, avoide to have twice the same digit next to each other.
+		 *
+		 * @param int $first_pin first digit to compare.
+		 * @param int $second_pin second digit to compare.
+		 *
+		 * @return int
+		 */
+		public function avoid_twice_same( $first_pin, $second_pin ) {
 			if ( $first_pin === $second_pin ) {
 				// rand with exclusion
 				in_array( ( $second_pin = random_int( 1, 9 ) ), array( $first_pin ) );
