@@ -27,9 +27,13 @@ Official doc to get it: https://developer.nuki.io/page/nuki-web-api-1-4/3#headin
 = Does this plugin developed by Nuki ? =
 No, I'm an independent WordPress developer, owning a Nuki Smartlock 3.0 Pro.
 
-= I've an idea to improve this plugin ? =
+= I've an idea to improve this plugin. =
 Great! share your idea at our [Ideas page](https://nuki-smartlock-for-wp.com/ideas)
 
+= How to contribute to this plugin?. =
+If you're a developer, you can send pull request to [Github](https://github.com/sebastienserre/connect-nuki-smartlock)
+If you're Polyglot, you can help translating this plugin at [Translate Plugins](https://translate.wordpress.org/projects/wp-plugins/connect-your-nuki-smartlock/)
+You can also just sponsors my work at [GH Sponsor](https://github.com/sponsors/sebastienserre/)
 
 == Screenshots ==
 1. Settings
