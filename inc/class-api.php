@@ -238,15 +238,28 @@ if ( ! class_exists( 'Api' ) ) {
 
 					$pin[ $i ] = random_int( 1, 9, );
 					$b = $i - 1;
-					if ( $pin[ $b ] === $pin[ $i ] ) {
-						// rand with exclusion
-						in_array( ( $pin[ $i ] = random_int( 1, 9 ) ), array( $pin[ $b ] ) );
-					}
+					$pin[ $i ] = $this->avoid_twice_same( $pin[ $b ], $pin[ $i ] );
 				}
 				$i ++;
 			}
 			ksort( $pin );
 			return implode( '', $pin );
+		}
+
+		public function avoid_twice_same( $first_pin, $second_pin ){
+			if ( $first_pin === $second_pin ) {
+				// rand with exclusion
+				in_array( ( $second_pin = random_int( 1, 9 ) ), array( $first_pin ) );
+
+				// check if we obtain 2 differents digits
+				if ( $first_pin !== $second_pin ) {
+					return $second_pin;
+				} else {
+					// same player play again.
+					$this->avoid_twice_same( $first_pin, $second_pin );
+				}
+			}
+			return $second_pin;
 		}
 
 		/**
