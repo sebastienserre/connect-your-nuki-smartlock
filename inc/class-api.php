@@ -225,10 +225,12 @@ if ( ! class_exists( 'Api' ) ) {
 		public function generate_pin() {
 			$size = 6;
 			$i    = 1;
-			$pin  = array();
+			$pin  = array(
+				'1' => 0,
+				'2' => 0,
+			);
 			while ( $i <= $size ) {
 				if ( 1 === $i || 2 === $i ) {
-					$pin[1] = $pin[2] = 0;
 					$pin[ $i ]   = random_int( 3, 9 );
 					if ( $pin[1] === $pin[2] ) {
 						// rand with exclusion

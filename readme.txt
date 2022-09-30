@@ -5,7 +5,7 @@ Donate link: https://github.com/sponsors/sebastienserre/
 Requires at least: 4.7
 Tested up to: 6.0
 Requires PHP: 7.0
-Stable tag: 0.2.2
+Stable tag: 0.3.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -13,6 +13,7 @@ Connect your Nuki.io smartlock to your WordPress admin.
 
 == Description ==
 By connecting your Nuki Smartlock to your WordPress admin, you\'ll be able to schedule an autolock between 2 hours.
+A Dashboard Widget allow you to quickly see your Smartlock state. It will allow you to create pincode in one click if a Nuki Keypad is paired with your Smartlock.
 
 ## WooCommerce Bookings Addons ##
 A WooCommerce Bookings addons is available. It will allow you to create & send to the Nuki Keypad a pin code each time a booking order is completed on your WordPress + WooCOmmerce website.
@@ -32,8 +33,13 @@ Great! share your idea at our [Ideas page](https://nuki-smartlock-for-wp.com/ide
 
 == Screenshots ==
 1. Settings
+2. Dashboard Widget
 
 == Changelog ==
+= 0.3.0 -- 30 septembre 2022 =
+- Add a dashboard widget with vitals + Codepin generation
+- Add PHPCS/WPCS corrections
+
 = 0.2.2 -- 10 September 2022 =
 - Improve i18n
 - Correct settings name

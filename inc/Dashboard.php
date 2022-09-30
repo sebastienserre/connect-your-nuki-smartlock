@@ -91,7 +91,7 @@ class Dashboard {
 				?>
 			</p>
 			<p>
-				<a href="<?php echo esc_url( $generate_link ); ?>"><?php esc_html_e( 'Generate a pincode', 'connect-your-nuki-smartlock' ); ?></a>
+				<a href="<?php echo esc_url( $generate_link ); ?>"><?php esc_html_e( 'Generate a pincode (valid 24h)', 'connect-your-nuki-smartlock' ); ?></a>
 			<h4>
 				<?php
 				/* translators: %1$s is the smartlock name defined by customer */
@@ -142,10 +142,19 @@ class Dashboard {
 			return;
 		}
 		if ( ! empty( $_GET['action'] ) && 'generate-pin' === $_GET['action'] ) {
-			$user                                                                               = wp_get_current_user();
-			$username                                                                           = $user->user_login;
-			$options                                                                            = get_option( 'nukiwp__settings' );
-			$options['ondemand-pinlist'][ $username . ' ' . wp_date( 'd/m/Y H\hi s', time() ) ] = $nuki->generate_pin();
+			$user                                     = wp_get_current_user();
+			$username                                 = $user->user_login;
+			$options                                  = get_option( 'nukiwp__settings' );
+			$pin_name                                 = $username . ' ' . wp_date( 'd/m/Y H\hi s', time() );
+			$pin_code                                 = $nuki->generate_pin();
+			$options['ondemand-pinlist'][ $pin_name ] = $pin_code;
+			$pin_data                                 = array(
+				'name'    => $pin_name,
+				'start'   => wp_date( 'c', time() ),
+				'end'     => wp_date( 'c', time() + 24 * HOUR_IN_SECONDS ),
+				'pincode' => $pin_code,
+			);
+			$nuki->send_pin_to_keypad( $pin_data );
 			update_option( 'nukiwp__settings', $options );
 		}
 
