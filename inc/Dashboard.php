@@ -120,7 +120,7 @@ class Dashboard {
 							admin_url( '/' ),
 						);
 						?>
-						<td><a href="<?php esc_url( $delete_link ); ?>"><?php esc_html_e( 'Delete', 'connect-your-nuki-smartlock' ); ?></a></td>
+						<td><a href="<?php echo esc_url( $delete_link ); ?>"><?php esc_html_e( 'Delete', 'connect-your-nuki-smartlock' ); ?></a></td>
 					</tr>
 						<?php
 				}
