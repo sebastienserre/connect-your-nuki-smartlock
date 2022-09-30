@@ -1,4 +1,10 @@
 <?php
+/**
+ * Nuki API.
+ *
+ * @package Connect-your-nuki-smartlock
+ * @see https://api.nuki.io/
+ */
 
 namespace Nuki\API;
 
@@ -7,32 +13,77 @@ if ( ! defined( 'ABSPATH' ) ) {
 } // Exit if accessed directly.
 
 if ( ! class_exists( 'Api' ) ) {
+
+	/**
+	 * Easy manage Nuki Smartlock from WordPress
+	 */
 	class Api {
 
+		/**
+		 * NukiWeb API Key
+		 *
+		 * @var mixed
+		 */
 		private $apikey;
+
+		/**
+		 * WordPress Settings
+		 *
+		 * @var array
+		 */
 		private $settings;
+
+		/**
+		 * URL to connect to
+		 *
+		 * @var string
+		 */
 		public $remote_url;
-		private $smartlockID;
 
-		public function init() {
-			// $this->define_variables();
-		}
+		/**
+		 * Managed Smartlock ID.
+		 *
+		 * @var false|mixed
+		 */
+		private $smartlock_id;
 
+		/**
+		 * PHP Constructor
+		 */
 		public function __construct() {
 			$this->settings    = \get_option( 'nukiwp__settings' );
 			$this->apikey      = $this->settings['apikey'];
 			$this->remote_url  = 'https://api.nuki.io';
-			$this->smartlockID = $this->get_smartlock_id();
+			$this->smartlock_id = $this->get_smartlock_id();
 		}
 
+		/**
+		 * Get NUki API Key.
+		 *
+		 * @return mixed
+		 */
 		public function get_apikey() {
 			return $this->apikey;
 		}
 
+		/**
+		 * Get WP settings.
+		 *
+		 * @return array
+		 */
 		public function get_settings() {
 			return $this->settings;
 		}
 
+		/**
+		 * Methods to easily make call to Nuki API.
+		 *
+		 * @param string $url NukiWeb API URL.
+		 * @param string $method can be 'get', 'post, 'put', 'delete'.
+		 * @param array  $body request parameters.
+		 *
+		 * @return array|false|mixed|\WP_Error
+		 */
 		public function api_call( $url, $method = 'get', $body = array() ) {
 			$args = array(
 				'headers' => array(
@@ -72,6 +123,11 @@ if ( ! class_exists( 'Api' ) ) {
 
 		}
 
+		/**
+		 * Get Smartlock data.
+		 *
+		 * @return array|false|mixed|\WP_Error
+		 */
 		public function get_smartlock() {
 			$url     = $this->remote_url . '/smartlock';
 			$results = $this->api_call( $url, 'get' );
@@ -79,30 +135,47 @@ if ( ! class_exists( 'Api' ) ) {
 			return $results;
 		}
 
+		/**
+		 * Get the smartlock ID.
+		 *
+		 * @return false|mixed
+		 */
 		public function get_smartlock_id() {
 			$settings = $this->settings;
 			if ( empty( $settings['smartlock-managed'] ) ) {
 				return false;
 			}
-			$this->smartlockID = $settings['smartlock-managed'];
+			$this->smartlock_id = $settings['smartlock-managed'];
 
-			return $this->smartlockID;
+			return $this->smartlock_id;
 		}
 
-		public function get_smartlock_details( $smartlock_ID ) {
-			$url     = $this->remote_url . '/smartlock/' . $smartlock_ID;
+		/**
+		 * Get Smartlock detailled data.
+		 *
+		 * @param string $smartlock_id see get_smartlock_id().
+		 *
+		 * @return array|false|mixed|\WP_Error
+		 */
+		public function get_smartlock_details( $smartlock_id ) {
+			$url     = $this->remote_url . '/smartlock/' . $smartlock_id;
 			$results = $this->api_call( $url, 'get' );
-			set_transient( 'nukiData[' . $smartlock_ID . ']', $results, HOUR_IN_SECONDS * 24 );
+			set_transient( 'nukiData[' . $smartlock_id . ']', $results, HOUR_IN_SECONDS * 24 );
 
 
 			return $results;
 		}
 
+		/**
+		 * Action to lock the smartlock.
+		 *
+		 * @return array|false|mixed|\WP_Error
+		 */
 		public function lock() {
 			$args   = array(
 				'url'    => $this->remote_url,
 				'tool'   => 'smartlock',
-				'id'     => $this->smartlockID,
+				'id'     => $this->smartlock_id,
 				'action' => 'action/lock',
 			);
 			$url    = implode( '/', $args );
@@ -111,11 +184,16 @@ if ( ! class_exists( 'Api' ) ) {
 			return $result;
 		}
 
+		/**
+		 * Action to unlock the smartlock.
+		 *
+		 * @return array|false|mixed|\WP_Error
+		 */
 		public function unlock() {
 			$args   = array(
 				'url'    => $this->remote_url,
 				'tool'   => 'smartlock',
-				'id'     => $this->smartlockID,
+				'id'     => $this->smartlock_id,
 				'action' => 'action/unlock',
 			);
 			$url    = implode( '/', $args );
@@ -124,6 +202,11 @@ if ( ! class_exists( 'Api' ) ) {
 			return $result;
 		}
 
+		/**
+		 * Get the smartlock state code by API.
+		 *
+		 * @return mixed
+		 */
 		public function get_state() {
 			$smartlocks = $this->get_smartlock();
 			foreach ( $smartlocks as $smartlock ) {
@@ -134,6 +217,9 @@ if ( ! class_exists( 'Api' ) ) {
 		}
 
 		/**
+		 * Generate a pincode. Must be 6 digits [1-9] and not starting by 12.
+		 *
+		 * @return string
 		 * @see https://developer.nuki.io/t/web-api-example-manage-pin-codes-for-your-nuki-keypad/54
 		 */
 		public function generate_pin() {
@@ -163,12 +249,18 @@ if ( ! class_exists( 'Api' ) ) {
 			return implode( '', $pin );
 		}
 
-
+		/**
+		 * Send pin to keypad. A keypad must be paired with the Smartlock.
+		 *
+		 * @param array $pin_data array with data needed to create the pin.
+		 *
+		 * @return array
+		 */
 		public function send_pin_to_keypad( $pin_data ) {
 			$args   = array(
 				'url'    => $this->remote_url,
 				'tool'   => 'smartlock',
-				'id'     => $this->smartlockID,
+				'id'     => $this->smartlock_id,
 				'action' => 'auth',
 			);
 			$url    = implode( '/', $args );
@@ -188,6 +280,14 @@ if ( ! class_exists( 'Api' ) ) {
 			return $result;
 		}
 
+		/**
+		 * Transform the numeric state code to an human readable state code.
+		 *
+		 * @param int $code state code sent by API.
+		 * @param int $type Smartlock type sent by API.
+		 *
+		 * @return string|null
+		 */
 		public function state( $code, $type ) {
 			$msg = '';
 			switch ( $type ) {
