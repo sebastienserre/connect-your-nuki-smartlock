@@ -6,8 +6,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } // Exit if accessed directly.
 
-if ( ! class_exists( 'api' ) ) {
-	class api {
+if ( ! class_exists( 'Api' ) ) {
+	class Api {
 
 		private $apikey;
 		private $settings;
@@ -15,7 +15,7 @@ if ( ! class_exists( 'api' ) ) {
 		private $smartlockID;
 
 		public function init() {
-			//$this->define_variables();
+			// $this->define_variables();
 		}
 
 		public function __construct() {
@@ -53,9 +53,8 @@ if ( ! class_exists( 'api' ) ) {
 					$result = wp_remote_post( $url, $args );
 					break;
 				case 'put':
-
 					$arg                             = array(
-						'body'   => json_encode( $body ),
+						'body'   => wp_json_encode( $body ),
 						'method' => 'PUT',
 						'accept' => 'application/json',
 					);
@@ -137,25 +136,25 @@ if ( ! class_exists( 'api' ) ) {
 		/**
 		 * @see https://developer.nuki.io/t/web-api-example-manage-pin-codes-for-your-nuki-keypad/54
 		 */
-		public function generate_pin( $pin_name='' ) {
+		public function generate_pin() {
 			$size = 6;
 			$i    = 1;
 			$pin  = array();
 			while ( $i <= $size ) {
 				if ( 1 === $i || 2 === $i ) {
 					$pin[1] = $pin[2] = 0;
-					$pin[$i]   = random_int( 3, 9 );
-					if ( $pin[1] === $pin[2] ){
+					$pin[ $i ]   = random_int( 3, 9 );
+					if ( $pin[1] === $pin[2] ) {
 						// rand with exclusion
-						in_array( ($pin[2] = random_int(3,9)), array( $pin[1]) );
+						in_array( ( $pin[2] = random_int( 3, 9 ) ), array( $pin[1] ) );
 					}
 				} else {
 
-					$pin[$i] = random_int( 1, 9, );
-					$b = $i-1;
-					if ( $pin[$b] === $pin[$i] ){
+					$pin[ $i ] = random_int( 1, 9, );
+					$b = $i - 1;
+					if ( $pin[ $b ] === $pin[ $i ] ) {
 						// rand with exclusion
-						in_array( ( $pin[$i] = random_int(1,9) ), array( $pin[$b] ) );
+						in_array( ( $pin[ $i ] = random_int( 1, 9 ) ), array( $pin[ $b ] ) );
 					}
 				}
 				$i ++;
@@ -182,7 +181,7 @@ if ( ! class_exists( 'api' ) ) {
 				'allowedUntilTime' => 0,
 				'accountUserId'    => 0,
 				'type'             => 13,
-				'code'             => $pin_data['pincode']
+				'code'             => $pin_data['pincode'],
 			);
 			$result = $this->api_call( $url, 'put', $body );
 
@@ -190,69 +189,71 @@ if ( ! class_exists( 'api' ) ) {
 		}
 
 		public function state( $code, $type ) {
+			$msg = '';
 			switch ( $type ) {
 				case 0:
 				case 3:
 				case 4:
 					switch ( $code ) {
 						case 0:
-							return __( 'uncalibrated', 'connect-your-nuki-smartlock' );
+							$msg = __( 'uncalibrated', 'connect-your-nuki-smartlock' );
 							break;
 						case 1:
-							return __( 'locked', 'connect-your-nuki-smartlock' );
+							$msg = __( 'locked', 'connect-your-nuki-smartlock' );
 							break;
 						case 2:
-							return __( 'unlocking', 'connect-your-nuki-smartlock' );
+							$msg = __( 'unlocking', 'connect-your-nuki-smartlock' );
 							break;
 						case 3:
-							return __( 'unlocked', 'connect-your-nuki-smartlock' );
+							$msg = __( 'unlocked', 'connect-your-nuki-smartlock' );
 							break;
 						case 4:
-							return __( 'locking', 'connect-your-nuki-smartlock' );
+							$msg = __( 'locking', 'connect-your-nuki-smartlock' );
 							break;
 						case 5:
-							return __( 'unlatched', 'connect-your-nuki-smartlock' );
+							$msg = __( 'unlatched', 'connect-your-nuki-smartlock' );
 							break;
 						case 6:
-							return __( "unlocked (lock 'n' go)", 'connect-your-nuki-smartlock' );
+							$msg = __( "unlocked (lock 'n' go)", 'connect-your-nuki-smartlock' );
 							break;
 						case 7:
-							return __( "unlatching", 'connect-your-nuki-smartlock' );
+							$msg = __( 'unlatching', 'connect-your-nuki-smartlock' );
 							break;
 						case 254:
-							return __( "motor blocked", 'connect-your-nuki-smartlock' );
+							$msg = __( 'motor blocked', 'connect-your-nuki-smartlock' );
 							break;
 						case 255:
-							return __( "motor blocked", 'connect-your-nuki-smartlock' );
+							$msg = __( 'motor blocked', 'connect-your-nuki-smartlock' );
 							break;
 					}
 					break;
 				case 2:
-					switch ( $code ){
+					switch ( $code ) {
 						case 0:
-							return __( "untrained", 'connect-your-nuki-smartlock' );
+							$msg = __( 'untrained', 'connect-your-nuki-smartlock' );
 							break;
 						case 1:
-							return __( "online", 'connect-your-nuki-smartlock' );
+							$msg = __( 'online', 'connect-your-nuki-smartlock' );
 							break;
 						case 3:
-							return __( "ring to open active", 'connect-your-nuki-smartlock' );
+							$msg = __( 'ring to open active', 'connect-your-nuki-smartlock' );
 							break;
 						case 5:
-							return __( "open", 'connect-your-nuki-smartlock' );
+							$msg = __( 'open', 'connect-your-nuki-smartlock' );
 							break;
 						case 7:
-							return __( "opening", 'connect-your-nuki-smartlock' );
+							$msg = __( 'opening', 'connect-your-nuki-smartlock' );
 							break;
 						case 253:
-							return __( "boot run", 'connect-your-nuki-smartlock' );
+							$msg = __( 'boot run', 'connect-your-nuki-smartlock' );
 							break;
 						case 255:
-							return __( "undefined", 'connect-your-nuki-smartlock' );
+							$msg = __( 'undefined', 'connect-your-nuki-smartlock' );
 							break;
 					}
 					break;
 			}
+			return $msg;
 		}
 	}
 }

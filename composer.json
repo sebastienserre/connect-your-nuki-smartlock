@@ -1,0 +1,30 @@
+{
+	"name": "thivinfo/nuki-smartlock",
+	"description": "Connect Your Nuki Smartlock to your WordPress website.",
+	"license": "GPL-3.0-or-later",
+	"homepage": "https://nuki-smartlock-for-wp.com/",
+	"type": "wordpress-plugin",
+	"require": {
+		"php": ">=7.0"
+	},
+	"require-dev": {
+		"dealerdirect/phpcodesniffer-composer-installer": "*",
+		"wp-coding-standards/wpcs": "*",
+		"automattic/vipwpcs": "*",
+		"phpcompatibility/phpcompatibility-wp": "*"
+	},
+	"scripts": {
+		"test":"vendor/bin/phpunit",
+		"cs": "vendor/bin/phpcs",
+		"stan": "vendor/bin/phpstan analyze --memory-limit=400M",
+		"lint": [
+			"@cs",
+			"@stan"
+		]
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	}
+}

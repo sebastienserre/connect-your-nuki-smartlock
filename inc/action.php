@@ -1,4 +1,9 @@
 <?php
+/** Actions.
+ *
+ * @package Connect-your-nuki-smartlock
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } // Exit if accessed directly.
@@ -6,12 +11,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * @see https://thevaluable.dev/php-datetime-create-compare-format/#comparing-datetimes
  */
-add_action( 'nuki_cron_hook', 'nukiwp_cron_check');
-//add_action( 'admin_init', 'nuki_cron_check');
+add_action( 'nuki_cron_hook', 'nukiwp_cron_check' );
 
 if ( ! function_exists( 'nukiwp_cron_check' ) ) {
+	/**
+	 * Will check on every interval if the door is locked.
+	 *
+	 * @return void
+	 */
 	function nukiwp_cron_check() {
-		$nuki     = new \Nuki\API\api();
+		$nuki     = new \Nuki\API\Api();
 		$settings = $nuki->get_settings();
 
 		// bail if feature not activated.
@@ -24,19 +33,16 @@ if ( ! function_exists( 'nukiwp_cron_check' ) ) {
 
 		$timezone = wp_timezone();
 
-		$startTime   = DateTime::createFromFormat( 'G:i', $start, $timezone );
-		$endTime     = DateTime::createFromFormat( 'G:i', $end, $timezone );
-		$currentTime = new DateTime( 'now', $timezone );
+		$start_time   = DateTime::createFromFormat( 'G:i', $start, $timezone );
+		$end_time     = DateTime::createFromFormat( 'G:i', $end, $timezone );
+		$current_time = new DateTime( 'now', $timezone );
 
-		//to avoid difficulties with day change. I'm checking if I'm outside the day part.
-		if ( $currentTime >= $startTime || $currentTime <= $endTime ) {
-			$nuki  = new \Nuki\API\api();
+		// to avoid difficulties with day change. I'm checking if I'm outside the day part.
+		if ( $current_time >= $start_time || $current_time <= $end_time ) {
+			$nuki  = new \Nuki\API\Api();
 			$state = $nuki->get_state();
 			if ( 3 === $state ) {
 				$nuki->lock();
-				error_log( wp_date( 'j F Y, G:i' ) . ': Door locked' );
-			} else {
-				error_log( wp_date( 'j F Y, G:i' ) . ': Door already locked' );
 			}
 		}
 	}

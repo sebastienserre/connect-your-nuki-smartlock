@@ -20,7 +20,7 @@ class Dashboard {
 	}
 
 	public function render_dashboard(){
-		$nuki = new api();
+		$nuki = new Api();
 		$data = $nuki->get_smartlock_details( $nuki->get_smartlock_id() );
 		$options = get_option( 'nukiwp__settings' );
 
@@ -106,7 +106,7 @@ class Dashboard {
 	}
 
 	function generate_pincode() {
-		$nuki = new api();
+		$nuki = new Api();
 		if ( empty( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'action' ) ) {
 			return;
 		}
