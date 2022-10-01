@@ -5,7 +5,7 @@ Donate link: https://github.com/sponsors/sebastienserre/
 Requires at least: 4.7
 Tested up to: 6.0
 Requires PHP: 7.0
-Stable tag: 0.3.0
+Stable tag: 0.3.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -40,6 +40,10 @@ You can also just sponsors my work at [GH Sponsor](https://github.com/sponsors/s
 2. Dashboard Widget
 
 == Changelog ==
+= 0.3.1 -- 01 octobre 2022 =
+- Hide the pincode generation if no keypad paired
+- fix some typo
+
 = 0.3.0 -- 30 septembre 2022 =
 - Add a dashboard widget with vitals + Codepin generation
 - Add PHPCS/WPCS corrections
