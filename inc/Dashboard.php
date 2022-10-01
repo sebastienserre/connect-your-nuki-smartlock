@@ -90,9 +90,9 @@ class Dashboard {
 				printf( wp_kses( '<span>State:</span> %1$s ', 'connect-your-nuki-smartlock', array( 'span' ) ), esc_attr( $nuki->state( $data['state']['state'], $data['type'] ) ) );
 				?>
 			</p>
-            <?php
-            if ( $data["config"]["keypadPaired"] || $data["config"]["keypad2Paired"] ){
-            ?>
+			<?php
+			if ( $data['config']['keypadPaired'] || $data['config']['keypad2Paired'] ) {
+				?>
 			<p>
 				<a href="<?php echo esc_url( $generate_link ); ?>"><?php esc_html_e( 'Generate a pincode (valid 24h)', 'connect-your-nuki-smartlock' ); ?></a>
 			<h4>
@@ -130,9 +130,9 @@ class Dashboard {
 				?>
 			</table>
 			</p>
-                <?php
-            }
-                ?>
+				<?php
+			}
+			?>
 		</div>
 		<?php
 	}
