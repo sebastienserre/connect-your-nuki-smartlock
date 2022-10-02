@@ -1,11 +1,15 @@
 .nuki_dashboard{
 	.battery-ok,
-	.smartlock-locked{
-		color: green;
+	.smartlock-locked {
+		a {
+			color: green;
+		}
 	}
 	.battery-critical,
-	.smartlock-unlocked{
-		color: red;
+	.smartlock-unlocked {
+		a {
+			color: red;
+		}
 	}
 	table {
 		font-family: arial, sans-serif;

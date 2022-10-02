@@ -8,6 +8,7 @@
 namespace Nuki\Dashboard;
 
 use Nuki\API\api;
+use function Nuki\Bookings\nukiwp_api;
 
 /**
  * This class implement the Widget Dashboard.
@@ -28,6 +29,7 @@ class Dashboard {
 		add_action( 'wp_dashboard_setup', array( $this, 'dashboard_widget' ) );
 		add_action( 'admin_init', array( $this, 'generate_pincode' ) );
 		add_action( 'admin_init', array( $this, 'delete_pincode' ) );
+		add_action( 'admin_init', array( $this, 'action' ) );
 	}
 
 	/**
@@ -45,8 +47,8 @@ class Dashboard {
 	 * @return void
 	 */
 	public function render_dashboard() {
-		$nuki = new Api();
-		$data = $nuki->get_smartlock_details( $nuki->get_smartlock_id() );
+		$nuki    = new Api();
+		$data    = $nuki->get_smartlock_details( $nuki->get_smartlock_id() );
 		$options = get_option( 'nukiwp__settings' );
 
 		// Generate classname for Battery level.
@@ -63,7 +65,25 @@ class Dashboard {
 			),
 			admin_url( '/' ),
 		);
+		$action     = 'lock';
+		$lock_state = $nuki->state( $data['state']['state'], $data['type'] );
+		if ( 'locked' === $lock_state ) {
+			$action = 'unlock';
+		}
+		$action_link = add_query_arg(
+			array(
+				'action'   => $action,
+				'_wpnonce' => wp_create_nonce( 'action' ),
 
+			),
+			admin_url( '/' ),
+		);
+		$allowed_tags = array(
+			'span' => array(),
+			'a'    => array(
+				'href' => array(),
+			),
+		);
 		?>
 		<div class="nuki_dashboard">
 			<h3>
@@ -75,7 +95,7 @@ class Dashboard {
 			<p>
 				<?php
 				/* translators: %1$s is the smartlock ID */
-				printf( wp_kses( '<span>Id:</span> %1$s ', 'connect-your-nuki-smartlock', array( 'span' ) ), esc_attr( $nuki->get_smartlock_id() ) );
+				printf( wp_kses( __( '<span>Id:</span> %1$s ', 'connect-your-nuki-smartlock' ), $allowed_tags ), esc_attr( $nuki->get_smartlock_id() ) );
 				?>
 			</p>
 			<p class="battery-<?php echo esc_attr( $battery_state ); ?>">
@@ -87,49 +107,50 @@ class Dashboard {
 			<p class="smartlock-<?php echo esc_attr( $nuki->state( $data['state']['state'], $data['type'] ) ); ?>">
 				<?php
 				/* translators: %1$s is the smartlock state */
-				printf( wp_kses( '<span>State:</span> %1$s ', 'connect-your-nuki-smartlock', array( 'span' ) ), esc_attr( $nuki->state( $data['state']['state'], $data['type'] ) ) );
+				printf( wp_kses( __( '<a href="%2$s"><span>State:</span> %1$s </a>', 'connect-your-nuki-smartlock' ), $allowed_tags ), esc_attr( $lock_state ), esc_url( $action_link ) );
 				?>
 			</p>
 			<?php
 			if ( $data['config']['keypadPaired'] || $data['config']['keypad2Paired'] ) {
 				?>
-			<p>
-				<a href="<?php echo esc_url( $generate_link ); ?>"><?php esc_html_e( 'Generate a pincode (valid 24h)', 'connect-your-nuki-smartlock' ); ?></a>
-			<h4>
-				<?php
-				/* translators: %1$s is the smartlock name defined by customer */
-				printf( esc_attr__( 'List of On-Demand Pin generated ', 'connect-your-nuki-smartlock' ), esc_attr( $data['name'] ) );
-				?>
-			</h4>
-				<table>
-				<tr>
-					<th><?php esc_html_e( 'Name', 'connect-your-nuki-smartlock' ); ?></th>
-					<th><?php esc_html_e( 'Pincode', 'connect-your-nuki-smartlock' ); ?></th>
-					<th><?php esc_html_e( 'Actions', 'connect-your-nuki-smartlock' ); ?></th>
-				</tr>
-				<?php
-				foreach ( $options['ondemand-pinlist'] as $name => $pin ) {
+				<p>
+					<a href="<?php echo esc_url( $generate_link ); ?>"><?php esc_html_e( 'Generate a pincode (valid 24h)', 'connect-your-nuki-smartlock' ); ?></a>
+				<h4>
+					<?php
+					/* translators: %1$s is the smartlock name defined by customer */
+					printf( esc_attr__( 'List of On-Demand Pin generated ', 'connect-your-nuki-smartlock' ), esc_attr( $data['name'] ) );
 					?>
+				</h4>
+				<table>
 					<tr>
-						<td><?php echo esc_html( $name ); ?></td>
-						<td><?php echo esc_html( $pin ); ?></td>
-						<?php
-						$delete_link = add_query_arg(
-							array(
-								'action'   => 'delete-pin',
-								'_wpnonce' => wp_create_nonce( 'action' ),
-								'pin_name' => $name,
-							),
-							admin_url( '/' ),
-						);
-						?>
-						<td><a href="<?php echo esc_url( $delete_link ); ?>"><?php esc_html_e( 'Delete', 'connect-your-nuki-smartlock' ); ?></a></td>
+						<th><?php esc_html_e( 'Name', 'connect-your-nuki-smartlock' ); ?></th>
+						<th><?php esc_html_e( 'Pincode', 'connect-your-nuki-smartlock' ); ?></th>
+						<th><?php esc_html_e( 'Actions', 'connect-your-nuki-smartlock' ); ?></th>
 					</tr>
+					<?php
+					foreach ( $options['ondemand-pinlist'] as $name => $pin ) {
+						?>
+						<tr>
+							<td><?php echo esc_html( $name ); ?></td>
+							<td><?php echo esc_html( $pin ); ?></td>
+							<?php
+							$delete_link = add_query_arg(
+								array(
+									'action'   => 'delete-pin',
+									'_wpnonce' => wp_create_nonce( 'action' ),
+									'pin_name' => $name,
+								),
+								admin_url( '/' ),
+							);
+							?>
+							<td><a href="<?php echo esc_url( $delete_link ); ?>"><?php esc_html_e( 'Delete', 'connect-your-nuki-smartlock' ); ?></a>
+							</td>
+						</tr>
 						<?php
-				}
-				?>
-			</table>
-			</p>
+					}
+					?>
+				</table>
+				</p>
 				<?php
 			}
 			?>
@@ -163,7 +184,6 @@ class Dashboard {
 			$nuki->send_pin_to_keypad( $pin_data );
 			update_option( 'nukiwp__settings', $options );
 		}
-
 	}
 
 	/**
@@ -183,8 +203,26 @@ class Dashboard {
 			unset( $options['ondemand-pinlist'][ sanitize_text_field( $_GET['pin_name'] ) ] );
 			update_option( 'nukiwp__settings', $options );
 		}
+	}
 
+	/**
+	 * Lock or unlock the smartlock from the Dashboard.
+	 *
+	 * @return bool
+	 */
+	public function action() {
+		if ( ! empty( $_GET['_wpnonce'] ) && wp_verify_nonce( $_GET['_wpnonce'], 'action' ) && empty( $_GET['action'] ) || 'unlock' === $_GET['action'] || 'lock' === $_GET['action'] ) {
+			if ( 'lock' === $_GET['action'] ) {
+				nukiwp_api()->lock();
+			}
+			if ( 'unlock' === $_GET['action'] ) {
+				nukiwp_api()->unlock();
+			}
+			return true;
+		}
+		return false;
 	}
 }
+
 $dashboard = new Dashboard();
 $dashboard->init();

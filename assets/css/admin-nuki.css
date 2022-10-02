@@ -1,9 +1,9 @@
-.nuki_dashboard .battery-ok,
-.nuki_dashboard .smartlock-locked {
+.nuki_dashboard .battery-ok a,
+.nuki_dashboard .smartlock-locked a {
   color: green;
 }
-.nuki_dashboard .battery-critical,
-.nuki_dashboard .smartlock-unlocked {
+.nuki_dashboard .battery-critical a,
+.nuki_dashboard .smartlock-unlocked a {
   color: red;
 }
 .nuki_dashboard table {
