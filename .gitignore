@@ -6,3 +6,4 @@
 /vendor/bin/
 /vendor/automattic/
 /vendor/
+.phpunit.result.cache

@@ -62,10 +62,33 @@ class testApi extends WP_UnitTestCase {
 			'action' => 'action/lock',
 		);
 		$url    = implode( '/', $url_args );
-		$result = wp_remote_request( $url, $args );
+		$result = wp_remote_post( $url, $args );
 		$return_code = (int) wp_remote_retrieve_response_code( $result );
-		error_log( $return_code);
 		\PHPUnit\Framework\assertIsArray( $result );
-		\PHPUnit\Framework\assertSame( 200, $return_code );
+		\PHPUnit\Framework\assertSame( 204, $return_code );
+
+		//case put
+		$url = $this->api->remote_url . '/smartlock/' . $this->api->get_smartlock_id() . '/auth';
+		$body   = array(
+			'name'             => 'pintest',
+			'allowedFromDate'  => time(),
+			'allowedUntilDate' => time(),
+			'allowedWeekDays'  => 127,
+			'allowedFromTime'  => 0,
+			'allowedUntilTime' => 0,
+			'accountUserId'    => 0,
+			'type'             => 13,
+			'code'             => '541236',
+		);
+		$arg                             = array(
+			'body'   => wp_json_encode( $body ),
+			'method' => 'PUT',
+			'accept' => 'application/json',
+		);
+		$args['headers']['Content-Type'] = 'application/json';
+		$args = wp_parse_args( $arg, $args );
+		$result = wp_remote_request( $url, $args );
+		\PHPUnit\Framework\assertIsArray( $result );
+		\PHPUnit\Framework\assertSame( 204, $return_code );
 	}
 }
