@@ -16,7 +16,7 @@ By connecting your Nuki Smartlock to your WordPress admin, you\'ll be able to sc
 A Dashboard Widget allow you to quickly see your Smartlock state. It will allow you to create pincode in one click if a Nuki Keypad is paired with your Smartlock.
 
 ## WooCommerce Bookings Addons ##
-A WooCommerce Bookings addons is available. It will allow you to create & send to the Nuki Keypad a pin code each time a booking order is completed on your WordPress + WooCOmmerce website.
+A WooCommerce Bookings addons is available. It will allow you to create & send to the Nuki Keypad a pin code each time a booking order is completed on your WordPress + WooCommerce website.
 Available at [Nuki Smartlock for WordPress](https://nuki-smartlock-for-wp.com/)
 
 == Frequently Asked Questions ==
