@@ -1,1 +1,1 @@
-{"version":1,"defects":[],"times":[]}
+{"version":1,"defects":{"ApiTest::test_get_smartlock":4,"testApi::test_get_smartlock":3,"testApi::test_get_apikey":3,"testApi::test_get_smartlcok_detail":3,"testApi::test_api_call":3},"times":{"ApiTest::test_get_smartlock":0.003,"testApi::test_get_smartlock":0.002,"testApi::test_get_apikey":0.005,"testApi::test_get_smartlock_id":0.004,"testApi::test_get_smartlcok_detail":0.097,"testApi::test_api_call":0.249}}
