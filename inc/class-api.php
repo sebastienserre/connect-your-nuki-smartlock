@@ -76,6 +76,17 @@ if ( ! class_exists( 'Api' ) ) {
 		}
 
 		/**
+		 * Save settings.
+		 *
+		 * @param array $options array with new options merged to old ones.
+		 *
+		 * @return void
+		 */
+		public function save_settings( $options ) {
+			update_option( 'nukiwp__settings', $options );
+		}
+
+		/**
 		 * Methods to easily make call to Nuki API.
 		 *
 		 * @param string $url NukiWeb API URL.
@@ -379,4 +390,13 @@ if ( ! class_exists( 'Api' ) ) {
 			return $msg;
 		}
 	}
+}
+
+/**
+ * Initialize API.
+ *
+ * @return Api
+ */
+function NukiAPI() { // phpcs:disabled WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
+	return new Api();
 }
