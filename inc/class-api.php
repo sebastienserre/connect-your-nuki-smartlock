@@ -269,7 +269,7 @@ if ( ! class_exists( 'Api' ) ) {
 		}
 
 		/**
-		 * For security reason, avoide to have twice the same digit next to each other.
+		 * For security reason, avoid to have twice the same digit next to each other.
 		 *
 		 * @param int $first_pin first digit to compare.
 		 * @param int $second_pin second digit to compare.
