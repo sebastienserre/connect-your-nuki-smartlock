@@ -191,11 +191,11 @@ if ( ! class_exists( 'Api' ) ) {
 		 *
 		 * @return array|false|mixed|\WP_Error
 		 */
-		public function lock() {
+		public function lock( $smartlock_id ) {
 			$args   = array(
 				'url'    => $this->remote_url,
 				'tool'   => 'smartlock',
-				'id'     => $this->smartlock_id,
+				'id'     => $smartlock_id,
 				'action' => 'action/lock',
 			);
 			$url    = implode( '/', $args );
@@ -209,11 +209,11 @@ if ( ! class_exists( 'Api' ) ) {
 		 *
 		 * @return array|false|mixed|\WP_Error
 		 */
-		public function unlock() {
+		public function unlock( $smartlock_id ) {
 			$args   = array(
 				'url'    => $this->remote_url,
 				'tool'   => 'smartlock',
-				'id'     => $this->smartlock_id,
+				'id'     => $smartlock_id,
 				'action' => 'action/unlock',
 			);
 			$url    = implode( '/', $args );
@@ -228,7 +228,7 @@ if ( ! class_exists( 'Api' ) ) {
 		 * @return mixed
 		 */
 		public function get_state() {
-			$smartlocks = $this->get_smartlock();
+			$smartlocks = $this->get_smartlocks();
 			foreach ( $smartlocks as $smartlock ) {
 				$state = $smartlock['state']['state'];
 			}

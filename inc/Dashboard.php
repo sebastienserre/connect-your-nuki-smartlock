@@ -79,6 +79,7 @@ class Dashboard {
 			$action_link  = add_query_arg(
 				array(
 					'action'   => $action,
+                    'id' => $smartlock['smartlockId'],
 					'_wpnonce' => wp_create_nonce( 'action' ),
 
 				),
@@ -218,12 +219,12 @@ class Dashboard {
 	 * @return bool
 	 */
 	public function action() {
-		if ( ! empty( $_GET['_wpnonce'] ) && wp_verify_nonce( $_GET['_wpnonce'], 'action' ) && empty( $_GET['action'] ) || 'unlock' === $_GET['action'] || 'lock' === $_GET['action'] ) {
+		if ( ! empty( $_GET['_wpnonce'] ) && wp_verify_nonce( $_GET['_wpnonce'], 'action' ) && empty( $_GET['action'] ) || 'unlock' === $_GET['action'] || 'lock' === $_GET['action'] && ! empty( $_GET['id'] ) ) {
 			if ( 'lock' === $_GET['action'] ) {
-				nukiwp_api()->lock();
+				nukiwp_api()->lock( sanitize_key( $_GET['id'] ));
 			}
 			if ( 'unlock' === $_GET['action'] ) {
-				nukiwp_api()->unlock();
+				nukiwp_api()->unlock( sanitize_key( $_GET['id'] ) );
 			}
 			return true;
 		}
