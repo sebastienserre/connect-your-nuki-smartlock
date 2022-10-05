@@ -48,44 +48,50 @@ class Dashboard {
 	 */
 	public function render_dashboard() {
 		$nuki    = new Api();
-		$data    = $nuki->get_smartlock_details( $nuki->get_smartlock_id() );
+
+        $smartlocks = $nuki->get_smartlocks();
 		$options = get_option( 'nukiwp__settings' );
+        ?>
+        <div class="nuki_dashboard">
+            <?php
+		foreach ( $smartlocks as $smartlock ) {
+			$data = $smartlock;
+			// Generate classname for Battery level.
+			$battery_state = 'ok';
+			if ( $data['state']['batteryCritical'] ) {
+				$battery_state = 'critical';
+			}
 
-		// Generate classname for Battery level.
-		$battery_state = 'ok';
-		if ( $data['state']['batteryCritical'] ) {
-			$battery_state = 'critical';
-		}
+			$generate_link = add_query_arg(
+				array(
+					'action'   => 'generate-pin',
+					'_wpnonce' => wp_create_nonce( 'action' ),
+                    'id' => $smartlock['smartlockId'],
 
-		$generate_link = add_query_arg(
-			array(
-				'action'   => 'generate-pin',
-				'_wpnonce' => wp_create_nonce( 'action' ),
-
-			),
-			admin_url( '/' ),
+				),
+				admin_url( '/' )
 		);
-		$action     = 'lock';
-		$lock_state = $nuki->state( $data['state']['state'], $data['type'] );
-		if ( 'locked' === $lock_state ) {
-			$action = 'unlock';
-		}
-		$action_link = add_query_arg(
-			array(
-				'action'   => $action,
-				'_wpnonce' => wp_create_nonce( 'action' ),
+			$action        = 'lock';
+			$lock_state    = $nuki->state( $data['state']['state'], $data['type'] );
+			if ( 'locked' === $lock_state ) {
+				$action = 'unlock';
+			}
+			$action_link  = add_query_arg(
+				array(
+					'action'   => $action,
+					'_wpnonce' => wp_create_nonce( 'action' ),
 
-			),
-			admin_url( '/' ),
+				),
+				admin_url( '/' ),
 		);
-		$allowed_tags = array(
-			'span' => array(),
-			'a'    => array(
-				'href' => array(),
-			),
-		);
+			$allowed_tags = array(
+				'span' => array(),
+				'a'    => array(
+					'href' => array(),
+				),
+			);
 		?>
-		<div class="nuki_dashboard">
+
 			<h3>
 				<?php
 				/* translators: %1$s is the smartlock name defined by customer */
@@ -95,7 +101,7 @@ class Dashboard {
 			<p>
 				<?php
 				/* translators: %1$s is the smartlock ID */
-				printf( wp_kses( __( '<span>Id:</span> %1$s ', 'connect-your-nuki-smartlock' ), $allowed_tags ), esc_attr( $nuki->get_smartlock_id() ) );
+				printf( wp_kses( __( '<span>Id:</span> %1$s ', 'connect-your-nuki-smartlock' ), $allowed_tags ), esc_attr( $smartlock['smartlockId'] ) );
 				?>
 			</p>
 			<p class="battery-<?php echo esc_attr( $battery_state ); ?>">
@@ -128,7 +134,7 @@ class Dashboard {
 						<th><?php esc_html_e( 'Actions', 'connect-your-nuki-smartlock' ); ?></th>
 					</tr>
 					<?php
-					foreach ( $options['ondemand-pinlist'] as $name => $pin ) {
+					foreach ( $options['ondemand-pinlist'][$smartlock['smartlockId']] as $name => $pin ) {
 						?>
 						<tr>
 							<td><?php echo esc_html( $name ); ?></td>
@@ -153,6 +159,7 @@ class Dashboard {
 				</p>
 				<?php
 			}
+		}
 			?>
 		</div>
 		<?php
@@ -168,13 +175,13 @@ class Dashboard {
 		if ( empty( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'action' ) ) {
 			return;
 		}
-		if ( ! empty( $_GET['action'] ) && 'generate-pin' === $_GET['action'] ) {
+		if ( ! empty( $_GET['action'] ) && 'generate-pin' === $_GET['action'] && ! empty( $_GET['id'] ) ) {
 			$user                                     = wp_get_current_user();
 			$username                                 = $user->user_login;
 			$options                                  = get_option( 'nukiwp__settings' );
 			$pin_name                                 = $username . ' ' . wp_date( 'd/m/Y H\hi s', time() );
 			$pin_code                                 = $nuki->generate_pin();
-			$options['ondemand-pinlist'][ $pin_name ] = $pin_code;
+			$options['ondemand-pinlist'][sanitize_key($_GET['id'] )][ $pin_name ] = $pin_code;
 			$pin_data                                 = array(
 				'name'    => $pin_name,
 				'start'   => wp_date( 'c', time() ),

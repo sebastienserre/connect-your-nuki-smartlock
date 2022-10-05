@@ -147,6 +147,15 @@ if ( ! class_exists( 'Api' ) ) {
 		}
 
 		/**
+		 * Return all smartlocks. More logical methods name.
+		 *
+		 * @return array
+		 */
+		public function get_smartlocks() {
+			return $this->get_smartlock();
+		}
+
+		/**
 		 * Get the smartlock ID.
 		 *
 		 * @return false|mixed
