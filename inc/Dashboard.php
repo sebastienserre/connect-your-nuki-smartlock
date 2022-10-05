@@ -219,12 +219,13 @@ class Dashboard {
 	 * @return bool
 	 */
 	public function action() {
+        $nukiwp_api = new Api();
 		if ( ! empty( $_GET['_wpnonce'] ) && wp_verify_nonce( $_GET['_wpnonce'], 'action' ) && empty( $_GET['action'] ) || 'unlock' === $_GET['action'] || 'lock' === $_GET['action'] && ! empty( $_GET['id'] ) ) {
 			if ( 'lock' === $_GET['action'] ) {
-				nukiwp_api()->lock( sanitize_key( $_GET['id'] ));
+				$nukiwp_api->lock( sanitize_key( $_GET['id'] ));
 			}
 			if ( 'unlock' === $_GET['action'] ) {
-				nukiwp_api()->unlock( sanitize_key( $_GET['id'] ) );
+				$nukiwp_api->unlock( sanitize_key( $_GET['id'] ) );
 			}
 			return true;
 		}

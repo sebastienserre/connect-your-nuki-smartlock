@@ -73,3 +73,13 @@ if ( ! class_exists( 'Connect_Nuki_Smartlock' ) ) {
 }
 $nuki = new Connect_Nuki_Smartlock();
 $nuki->init();
+
+/**
+ * Initialize Nuki API.
+ *
+ * @return api
+ */
+function nukiwp_api() {
+	$api = new Api();
+	return $api;
+}

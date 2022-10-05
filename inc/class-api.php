@@ -31,7 +31,7 @@ if ( ! class_exists( 'Api' ) ) {
 		 *
 		 * @var array
 		 */
-		private $settings;
+		public $settings;
 
 		/**
 		 * URL to connect to
