@@ -188,7 +188,7 @@ class Dashboard {
 				'end'     => wp_date( 'c', time() + 24 * HOUR_IN_SECONDS ),
 				'pincode' => $pin_code,
 			);
-			$nuki->send_pin_to_keypad( $pin_data );
+			$nuki->send_pin_to_keypad( $pin_data,  sanitize_key( $_GET['id']));
 			update_option( 'nukiwp__settings', $options );
 		}
 	}

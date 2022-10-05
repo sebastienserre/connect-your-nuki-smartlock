@@ -296,14 +296,18 @@ if ( ! class_exists( 'Api' ) ) {
 		 * Send pin to keypad. A keypad must be paired with the Smartlock.
 		 *
 		 * @param array $pin_data array with data needed to create the pin.
+		 * @param string $smartlock_id Smartlock ID to send the pincode
 		 *
-		 * @return array
+		 * @return array|\WP_Error
 		 */
-		public function send_pin_to_keypad( $pin_data ) {
+		public function send_pin_to_keypad( $pin_data, $smartlock_id ) {
+			if ( empty( $smartlock_id ) ){
+				new \WP_Error('send_pin_to_keypad()', 'SmartlockID not provided in 2 parameters');
+			}
 			$args   = array(
 				'url'    => $this->remote_url,
 				'tool'   => 'smartlock',
-				'id'     => $this->smartlock_id,
+				'id'     => $smartlock_id,
 				'action' => 'auth',
 			);
 			$url    = implode( '/', $args );
