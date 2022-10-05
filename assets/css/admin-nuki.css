@@ -1,23 +1,29 @@
-.nuki_dashboard .battery-ok a,
-.nuki_dashboard .smartlock-locked a {
+#nuki_smartlock .nuki_dashboard .battery-ok a,
+#nuki_smartlock .nuki_dashboard .smartlock-locked a {
   color: green;
 }
-.nuki_dashboard .battery-critical a,
-.nuki_dashboard .smartlock-unlocked a {
+#nuki_smartlock .nuki_dashboard .battery-critical a,
+#nuki_smartlock .nuki_dashboard .smartlock-unlocked a {
   color: red;
 }
-.nuki_dashboard table {
+#nuki_smartlock .nuki_dashboard table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
 }
-.nuki_dashboard td, .nuki_dashboard th {
+#nuki_smartlock .nuki_dashboard td, #nuki_smartlock .nuki_dashboard th {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
 }
-.nuki_dashboard tr:nth-child(even) {
+#nuki_smartlock .nuki_dashboard tr:nth-child(even) {
   background-color: #dddddd;
+}
+#nuki_smartlock .nuki_dashboard h3 {
+  font-weight: 900;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  padding: 5px 0;
 }
 
 /*# sourceMappingURL=admin-nuki.css.map */
