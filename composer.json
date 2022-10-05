@@ -6,7 +6,8 @@
 	"type": "wordpress-plugin",
 	"require": {
 		"php": ">=7.0",
-		"phpunit/phpunit": "^9.5"
+		"phpunit/phpunit": "^9.5",
+		"phpunit/php-code-coverage": "^9.2"
 	},
 	"require-dev": {
 		"dealerdirect/phpcodesniffer-composer-installer": "*",

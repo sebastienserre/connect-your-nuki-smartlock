@@ -5,7 +5,7 @@
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '70ce16ba893cf20947b531707ed8e12fe7bffb94',
+        'reference' => '5c27e658d9ddad73a95bdf1ea9fab7b89347c324',
         'name' => 'thivinfo/nuki-smartlock',
         'dev' => true,
     ),
@@ -331,7 +331,7 @@
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '70ce16ba893cf20947b531707ed8e12fe7bffb94',
+            'reference' => '5c27e658d9ddad73a95bdf1ea9fab7b89347c324',
             'dev_requirement' => false,
         ),
         'wp-coding-standards/wpcs' => array(
