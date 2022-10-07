@@ -80,10 +80,12 @@ if ( ! class_exists( 'Api' ) ) {
 		 *
 		 * @param array $options array with new options merged to old ones.
 		 *
-		 * @return void
+		 * @return bool
 		 */
 		public function save_settings( $options ) {
-			update_option( 'nukiwp__settings', $options );
+			$result = update_option( 'nukiwp__settings', $options );
+			return $result;
+
 		}
 
 		/**
@@ -156,7 +158,7 @@ if ( ! class_exists( 'Api' ) ) {
 		}
 
 		/**
-		 * Get the smartlock ID.
+		 * Get the managed smartlock ID.
 		 *
 		 * @return false|mixed
 		 */
@@ -189,6 +191,8 @@ if ( ! class_exists( 'Api' ) ) {
 		/**
 		 * Action to lock the smartlock.
 		 *
+		 * @param int $smartlock_id Smartlock ID to lock.
+		 *
 		 * @return array|false|mixed|\WP_Error
 		 */
 		public function lock( $smartlock_id ) {
@@ -206,6 +210,8 @@ if ( ! class_exists( 'Api' ) ) {
 
 		/**
 		 * Action to unlock the smartlock.
+		 *
+		 * @param int $smartlock_id Smartlock ID to unlock.
 		 *
 		 * @return array|false|mixed|\WP_Error
 		 */
@@ -225,11 +231,14 @@ if ( ! class_exists( 'Api' ) ) {
 		/**
 		 * Get the smartlock state code by API.
 		 *
-		 * @return mixed
+		 * @param int $smartlock_managed Managed smartlcok ID
+		 *
+		 * @return int
 		 */
-		public function get_state() {
-			$smartlocks = $this->get_smartlocks();
-			foreach ( $smartlocks as $smartlock ) {
+		public function get_state( $smartlock_managed ) {
+			$smartlock = $this->get_smartlock_details( $smartlock_managed );
+			$state = '';
+			if ( ! empty( $smartlock ) ) {
 				$state = $smartlock['state']['state'];
 			}
 
@@ -258,7 +267,7 @@ if ( ! class_exists( 'Api' ) ) {
 					}
 				} else {
 
-					$pin[ $i ] = random_int( 1, 9, );
+					$pin[ $i ] = random_int( 1, 9 );
 					$b = $i - 1;
 					$pin[ $i ] = $this->avoid_twice_same( $pin[ $b ], $pin[ $i ] );
 				}
@@ -295,14 +304,14 @@ if ( ! class_exists( 'Api' ) ) {
 		/**
 		 * Send pin to keypad. A keypad must be paired with the Smartlock.
 		 *
-		 * @param array $pin_data array with data needed to create the pin.
+		 * @param array  $pin_data array with data needed to create the pin.
 		 * @param string $smartlock_id Smartlock ID to send the pincode
 		 *
 		 * @return array|\WP_Error
 		 */
 		public function send_pin_to_keypad( $pin_data, $smartlock_id ) {
-			if ( empty( $smartlock_id ) ){
-				new \WP_Error('send_pin_to_keypad()', 'SmartlockID not provided in 2 parameters');
+			if ( empty( $smartlock_id ) ) {
+				new \WP_Error( 'send_pin_to_keypad()', 'SmartlockID not provided in 2 parameters' );
 			}
 			$args   = array(
 				'url'    => $this->remote_url,
@@ -399,6 +408,8 @@ if ( ! class_exists( 'Api' ) ) {
 							break;
 					}
 					break;
+				default:
+					$msg = '';
 			}
 			return $msg;
 		}

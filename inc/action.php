@@ -39,7 +39,7 @@ if ( ! function_exists( 'nukiwp_cron_check' ) ) {
 
 		// to avoid difficulties with day change. I'm checking if I'm outside the day part.
 		if ( $current_time >= $start_time || $current_time <= $end_time ) {
-			$state = $nuki->get_state();
+			$state = $nuki->get_state( $settings['smartlock-managed'] );
 			if ( 3 === $state ) {
 				$nuki->lock( $settings['smartlock-managed'] );
 			}
