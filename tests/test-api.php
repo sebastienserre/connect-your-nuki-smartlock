@@ -2,16 +2,16 @@
 class testApi extends WP_UnitTestCase {
 
 	public $api;
+	public $options;
 
 	public function set_up(){
 		parent::set_up();
-		$options = get_option( 'nukiwp__settings' );
-		$options = array(
+		$this->options = array(
 			'apikey' => 'a8ca802281b6d89bcef356f2b5748801948d1e916a58e9c096c4420db226693d5a8206cdb90d3683',
 			'smartlock-managed' => '17985114732',
 
 		);
-		update_option( 'nukiwp__settings', $options );
+		update_option( 'nukiwp__settings', $this->options );
 		$this->api = new Nuki\API\Api();
 
 	}
@@ -21,6 +21,7 @@ class testApi extends WP_UnitTestCase {
 		$apikey = $this->api->get_apikey();
 
 		\PHPUnit\Framework\assertIsString($apikey );
+		\PHPUnit\Framework\assertSame('a8ca802281b6d89bcef356f2b5748801948d1e916a58e9c096c4420db226693d5a8206cdb90d3683', $apikey );
 
 	}
 
@@ -90,5 +91,24 @@ class testApi extends WP_UnitTestCase {
 		$result = wp_remote_request( $url, $args );
 		\PHPUnit\Framework\assertIsArray( $result );
 		\PHPUnit\Framework\assertSame( 204, $return_code );
+	}
+
+	public function test_save_settings( ){
+		$options = get_option( 'nukiwp__settings' );
+		$options['test'] = '1';
+		$result = $this->api->save_settings( $options );
+
+		\PHPUnit\Framework\assertTrue( is_bool( $result ) );
+	}
+
+	public function test_state(){
+		$result = $this->api->get_state( $this->api->get_smartlock_id());
+		\PHPUnit\Framework\assertIsInt( $result );
+	}
+
+	public function test_state_msg(){
+		$result = $this->api->state( 0, 0 );
+		\PHPUnit\Framework\assertIsString( $result );
+		\PHPUnit\Framework\assertNotEmpty( $result );
 	}
 }
