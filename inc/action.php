@@ -24,7 +24,7 @@ if ( ! function_exists( 'nukiwp_cron_check' ) ) {
 		$settings = $nuki->get_settings();
 
 		// bail if feature not activated.
-		if ( empty( $settings['autolock_activated'] ) || '1' !== $settings['autolock_activated'] ) {
+		if ( empty( $settings['autolock_activated'] ) || '1' !== $settings['autolock_activated'] || empty( $settings['smartlock-managed'] ) ) {
 			return;
 		}
 

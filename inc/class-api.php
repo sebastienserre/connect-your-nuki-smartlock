@@ -51,8 +51,10 @@ if ( ! class_exists( 'Api' ) ) {
 		 * PHP Constructor
 		 */
 		public function __construct() {
-			$this->settings    = \get_option( 'nukiwp__settings' );
-			$this->apikey      = $this->settings['apikey'];
+			$this->settings = \get_option( 'nukiwp__settings' );
+			if ( ! empty( $this->settings['apikey'] ) ) {
+				$this->apikey = $this->settings['apikey'];
+			}
 			$this->remote_url  = 'https://api.nuki.io';
 			$this->smartlock_id = $this->get_smartlock_id();
 		}
@@ -109,7 +111,7 @@ if ( ! class_exists( 'Api' ) ) {
 				default:
 					$result = wp_remote_get( $url, $args );
 					$code = (int) wp_remote_retrieve_response_code( $result );
-					if ( 200 ===  $code) {
+					if ( 200 === $code ) {
 						$body   = wp_remote_retrieve_body( $result );
 						$result = json_decode( $body, true );
 					}
@@ -117,7 +119,7 @@ if ( ! class_exists( 'Api' ) ) {
 				case 'post':
 					$result = wp_remote_post( $url, $args );
 					$code = (int) wp_remote_retrieve_response_code( $result );
-					if ( 200 ===  $code) {
+					if ( 200 === $code ) {
 						$body   = wp_remote_retrieve_body( $result );
 						$result = json_decode( $body, true );
 					}
@@ -133,7 +135,7 @@ if ( ! class_exists( 'Api' ) ) {
 
 					$result = wp_remote_request( $url, $args );
 					$code = (int) wp_remote_retrieve_response_code( $result );
-					if ( 200 ===  $code) {
+					if ( 200 === $code ) {
 						$body   = wp_remote_retrieve_body( $result );
 						$result = json_decode( $body, true );
 					}
@@ -249,7 +251,7 @@ if ( ! class_exists( 'Api' ) ) {
 		public function get_state( $smartlock_managed ) {
 			$smartlock = $this->get_smartlock_details( $smartlock_managed );
 			$state = '';
-			if ( ! empty( $smartlock ) ) {
+			if ( ! empty( $smartlock['state']['state'] ) ) {
 				$state = $smartlock['state']['state'];
 			}
 
