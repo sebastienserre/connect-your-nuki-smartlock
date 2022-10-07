@@ -5,7 +5,7 @@ Donate link: https://github.com/sponsors/sebastienserre/
 Requires at least: 4.7
 Tested up to: 6.0
 Requires PHP: 7.0
-Stable tag: 0.4.0
+Stable tag: 0.5.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -40,15 +40,19 @@ You can also just sponsors my work at [GH Sponsor](https://github.com/sponsors/s
 2. Dashboard Widget
 
 == Changelog ==
-= 0.4.0 -- 02 octobre 2022 =
+= 0.5.0 -- 07 october 2022 =
+- Allow to link how much smartlock you have on your backoffice.
+- The Dashboard widget is now showing all smartlock you may have connected.
+
+= 0.4.0 -- 02 october 2022 =
 - Allow to lock/unlock from the Widget Dashboard
 - add PHPUnit tests for robustness
 
-= 0.3.1 -- 01 octobre 2022 =
+= 0.3.1 -- 01 october 2022 =
 - Hide the pincode generation if no keypad paired
 - fix some typo
 
-= 0.3.0 -- 30 septembre 2022 =
+= 0.3.0 -- 30 september 2022 =
 - Add a dashboard widget with vitals + Codepin generation
 - Add PHPCS/WPCS corrections
 
