@@ -31,7 +31,9 @@ function nukiwp__add_admin_menu() {
 function nukiwp__settings_init() {
 
 	$options = get_option( 'nukiwp__settings' );
-	$token = $options['apikey'];
+	if ( ! empty( $options['apikey'] ) ) {
+		$token = $options['apikey'];
+	}
 	register_setting( 'pluginPage', 'nukiwp__settings' );
 
 
