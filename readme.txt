@@ -1,7 +1,7 @@
 === Connect Nuki Smartlock ===
 Contributors: sebastienserre
 Tags: smartlock, automation, nuki, bookings
-Donate link: https://github.com/sponsors/sebastienserre/
+Donate link: https://nuki-smartlock-for-wp.com/product/nuki-for-wordpress
 Requires at least: 4.7
 Tested up to: 6.0
 Requires PHP: 7.0
@@ -12,17 +12,20 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 Connect your Nuki.io smartlock to your WordPress admin.
 
 == Description ==
-By connecting your Nuki Smartlock to your WordPress admin, you\'ll be able to schedule an autolock between 2 hours.
-A Dashboard Widget allow you to quickly see your Smartlock state. It will allow you to create pincode in one click if a Nuki Keypad is paired with your Smartlock.
+By connecting your Nuki Smartlocks to your WordPress admin, you\'ll be able to schedule an autolock between 2 hours.
+A Dashboard Widget allow you to quickly see your Smartlocks state (battery level, lock state and more soon) . It will allow you to create pincode in one click if a Nuki Keypad is paired with your Smartlock.
 
 ## WooCommerce Bookings Addons ##
 A WooCommerce Bookings addons is available. It will allow you to create & send to the Nuki Keypad a pin code each time a booking order is completed on your WordPress + WooCommerce website.
-Available at [Nuki Smartlock for WordPress](https://nuki-smartlock-for-wp.com/)
+Available at [Nuki Smartlock for WordPress](https://nuki-smartlock-for-wp.com/).
 
 == Frequently Asked Questions ==
 = How to connect my Smartlock ? =
 You need to get an API token to https://web.nuki.io/#/login
 Official doc to get it: https://developer.nuki.io/page/nuki-web-api-1-4/3#heading--api-tokens
+
+= Is it possible to connect several smartlock ? =
+Yes, from version 0.5.0, Connect Your Nuki Smartlock will list all Nuki SMartlock connected to your NukiWeb account
 
 = Does this plugin developed by Nuki ? =
 No, I'm an independent WordPress developer, owning a Nuki Smartlock 3.0 Pro.

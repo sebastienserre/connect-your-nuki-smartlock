@@ -3,6 +3,8 @@ class testApi extends WP_UnitTestCase {
 
 	public $api;
 	public $options;
+	public $smartlock_id;
+	public $apikey;
 
 	public function set_up(){
 		parent::set_up();
@@ -13,6 +15,7 @@ class testApi extends WP_UnitTestCase {
 		);
 		update_option( 'nukiwp__settings', $this->options );
 		$this->api = new Nuki\API\Api();
+		$this->smartlock_id = '17985114732';
 
 	}
 
@@ -31,14 +34,29 @@ class testApi extends WP_UnitTestCase {
 	}
 
 	public function test_get_smartlcok_detail(){
-		$smartlock_id = $this->api->get_smartlock_id();
-		$details = $this->api->get_smartlock_details( $smartlock_id );
-
+		$details = $this->api->get_smartlock_details( $this->smartlock_id );
 		\PHPUnit\Framework\assertIsArray( $details );
 		\PHPUnit\Framework\assertArrayHasKey( 'smartlockId', $details );
 	}
 
-	Public function test_api_call(){
+	public function test_api_call_wrong_apikey(){
+		$args = array(
+			'headers' => array(
+				'Authorization' => 'Bearer ' . 'wrong-apikey',
+			),
+		);
+
+		$url     = $this->api->remote_url . '/smartlock/' . $this->smartlock_id;
+
+		//case get
+		$result = wp_remote_get( $url, $args );
+		$return_code = (int) wp_remote_retrieve_response_code( $result );
+
+		\PHPUnit\Framework\assertIsInt( $return_code );
+		\PHPUnit\Framework\assertIsBool( ! is_bool( $return_code ) );
+	}
+
+	public function test_api_call(){
 		$args = array(
 			'headers' => array(
 				'Authorization' => 'Bearer ' . $this->api->get_apikey(),
