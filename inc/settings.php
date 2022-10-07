@@ -178,14 +178,16 @@ function nukiwp_time_selector( $hour = 'start' ) {
 	$minutes = array( '00', '05', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55' );
 	$nuki = new \Nuki\API\Api();
 	$settings = $nuki->get_settings();
-	$selected_hour = $settings[ $hour . '-autolock' ];
 	$options = array();
-	foreach ( $hours as $hour ) {
-		foreach ( $minutes as $minute ) {
-			$formatted_hour = $hour . ':' . $minute;
-			$options[] = '<option value="' . esc_attr( $formatted_hour ) . '"' . selected( $selected_hour, $formatted_hour, false ) . '>' . $formatted_hour . '</option>';
-		}
-	}
+    if ( ! empty( $settings['autolock_activated'] ) ) {
+	    $selected_hour = $settings[ $hour . '-autolock' ];
+	    foreach ( $hours as $hour ) {
+		    foreach ( $minutes as $minute ) {
+			    $formatted_hour = $hour . ':' . $minute;
+			    $options[]      = '<option value="' . esc_attr( $formatted_hour ) . '"' . selected( $selected_hour, $formatted_hour, false ) . '>' . $formatted_hour . '</option>';
+		    }
+	    }
+    }
 	return $options;
 }
 
