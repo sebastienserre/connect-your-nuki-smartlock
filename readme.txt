@@ -5,7 +5,7 @@ Donate link: https://nuki-smartlock-for-wp.com/product/nuki-for-wordpress
 Requires at least: 4.7
 Tested up to: 6.0
 Requires PHP: 7.0
-Stable tag: 0.5.1
+Stable tag: 0.5.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -44,7 +44,7 @@ You can also just sponsors my work at [GH Sponsor](https://github.com/sponsors/s
 
 == Changelog ==
 
-= 0.5.1 -- 07 october 2022 =
+= 0.5.1//0.5.2 -- 07 october 2022 =
 - Fix a fatale + Warning & notice if no or wrong APIKey filled in settings.
 
 = 0.5.0 -- 07 october 2022 =
