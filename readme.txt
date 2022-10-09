@@ -48,6 +48,9 @@ You can also just sponsors my work at [GH Sponsor](https://github.com/sponsors/s
 - Fix notices.
 - correct wrong 0.5.3 svn fucking deployment.
 
+= 0.5.1//0.5.2 -- 07 october 2022 =
+- Fix a fatale + Warning & notice if no or wrong APIKey filled in settings.
+
 = 0.5.0 -- 07 october 2022 =
 - Allow to link how much smartlock you have on your backoffice.
 - The Dashboard widget is now showing all smartlock you may have connected.
