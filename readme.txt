@@ -5,7 +5,7 @@ Donate link: https://nuki-smartlock-for-wp.com/product/nuki-for-wordpress
 Requires at least: 4.7
 Tested up to: 6.0
 Requires PHP: 7.0
-Stable tag: 0.5.3
+Stable tag: 0.5.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -44,9 +44,9 @@ You can also just sponsors my work at [GH Sponsor](https://github.com/sponsors/s
 
 == Changelog ==
 
-= 0.5.3 -- 09 october 2022 =
+= 0.5.4 -- 09 october 2022 =
 - Fix notices.
-
+- correct wrong 0.5.3 svn fucking deployment.
 
 = 0.5.0 -- 07 october 2022 =
 - Allow to link how much smartlock you have on your backoffice.
