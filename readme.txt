@@ -5,7 +5,7 @@ Donate link: https://nuki-smartlock-for-wp.com/product/nuki-for-wordpress
 Requires at least: 4.7
 Tested up to: 6.0
 Requires PHP: 7.0
-Stable tag: 0.5.4
+Stable tag: 0.5.5
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -43,6 +43,9 @@ You can also just sponsors my work at [GH Sponsor](https://github.com/sponsors/s
 2. Dashboard Widget
 
 == Changelog ==
+= 0.5.5 -- 11 october 2022 =
+- Fix notices.
+- Correct hours selectors.
 
 = 0.5.4 -- 09 october 2022 =
 - Fix notices.

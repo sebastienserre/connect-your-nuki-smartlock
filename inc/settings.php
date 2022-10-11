@@ -179,7 +179,7 @@ function nukiwp_time_selector( $hour = 'start' ) {
 	$nuki = new \Nuki\API\Api();
 	$settings = $nuki->get_settings();
 	$options = array();
-    if ( ! empty( $settings['autolock_activated'] ) ) {
+    if ( ! empty( $settings['smartlock-managed'] ) ) {
 	    $selected_hour = $settings[ $hour . '-autolock' ];
 	    foreach ( $hours as $hour ) {
 		    foreach ( $minutes as $minute ) {
