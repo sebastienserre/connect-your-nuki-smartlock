@@ -3,7 +3,7 @@ Contributors: sebastienserre
 Tags: smartlock, automation, nuki, bookings
 Donate link: https://nuki-smartlock-for-wp.com/product/nuki-for-wordpress
 Requires at least: 4.7
-Tested up to: 6.0
+Tested up to: 6.1
 Requires PHP: 7.0
 Stable tag: 0.5.5
 License: GPLv3
