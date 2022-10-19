@@ -5,7 +5,7 @@
  * Description: Connect your Nuki Smartlock to your WordPress and manage it!
  * Author: Nuki Smartlock for WP
  * Author URI: https://nuki-smartlock-for-wp.com/
- * Version: 0.5.5
+ * Version: 1.0.0
  **/
 
 namespace Nuki;
