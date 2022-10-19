@@ -179,15 +179,15 @@ function nukiwp_time_selector( $hour = 'start' ) {
 	$nuki = new \Nuki\API\Api();
 	$settings = $nuki->get_settings();
 	$options = array();
-    if ( ! empty( $settings['smartlock-managed'] ) ) {
-	    $selected_hour = $settings[ $hour . '-autolock' ];
-	    foreach ( $hours as $hour ) {
-		    foreach ( $minutes as $minute ) {
-			    $formatted_hour = $hour . ':' . $minute;
-			    $options[]      = '<option value="' . esc_attr( $formatted_hour ) . '"' . selected( $selected_hour, $formatted_hour, false ) . '>' . $formatted_hour . '</option>';
-		    }
-	    }
-    }
+	if ( ! empty( $settings['smartlock-managed'] ) ) {
+		$selected_hour = $settings[ $hour . '-autolock' ];
+		foreach ( $hours as $hour ) {
+			foreach ( $minutes as $minute ) {
+				$formatted_hour = $hour . ':' . $minute;
+				$options[]      = '<option value="' . esc_attr( $formatted_hour ) . '"' . selected( $selected_hour, $formatted_hour, false ) . '>' . $formatted_hour . '</option>';
+			}
+		}
+	}
 	return $options;
 }
 
@@ -200,7 +200,7 @@ function nukiwp__manage_smartlock() {
 	$nuki = new \Nuki\API\Api();
 	$smartlocks = $nuki->get_smartlock();
 	if ( empty( $smartlocks ) ) {
-		echo esc_attr__( 'Wrong or empty API key', 'connect-your-nuki-smartlock' );
+		echo '<span class="nuki-error">' . esc_html__( 'Wrong or empty API key', 'connect-your-nuki-smartlock' ) . '</span>';
 		return;
 	}
 	$settings = $nuki->get_settings();
