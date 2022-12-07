@@ -40,5 +40,8 @@ Widget Dashboard styles
   border-bottom: 1px solid;
   padding: 5px 0;
 }
+#nuki_smartlock .nuki_dashboard .nuki-dashboard-actions {
+  width: 33%;
+}
 
 /*# sourceMappingURL=admin-nuki.css.map */
