@@ -73,7 +73,7 @@ class Dashboard {
 				);
 				$action        = 'lock';
 				$lock_state    = $nuki->state( $data['state']['state'], $data['type'] );
-				if ( 'locked' === $lock_state ) {
+				if ( 1 === $data['state']['state'] &&  4 === $data['type'] ){
 					$action = 'unlock';
 				}
 				$action_link = add_query_arg(
@@ -151,12 +151,20 @@ class Dashboard {
 									'action'   => 'delete-pin',
 									'_wpnonce' => wp_create_nonce( 'action' ),
 									'pin_name' => $name,
+                                    'id' => $smartlock['smartlockId'],
 								),
 								admin_url( '/' )
 							);
 							?>
-							<td><a href="<?php echo esc_url( $delete_link ); ?>"><?php esc_html_e( 'Delete', 'connect-your-nuki-smartlock' ); ?></a>
-							</td>
+                            <td class="nuki-dashboard-actions">
+                                <ul>
+                                    <li>
+                                        <a href="<?php echo esc_url( $delete_link ); ?>">
+											<?php esc_html_e( 'Delete', 'connect-your-nuki-smartlock' ); ?>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </td>
 						</tr>
 							<?php
 						}
@@ -172,6 +180,7 @@ class Dashboard {
 			?>
 		</div>
 		<?php
+
 	}
 
 	/**
@@ -199,6 +208,7 @@ class Dashboard {
 			);
 			$nuki->send_pin_to_keypad( $pin_data, sanitize_key( $_GET['id'] ) );
 			update_option( 'nukiwp__settings', $options );
+            $this->redirect_admin( 0 );
 		}
 	}
 
@@ -215,10 +225,11 @@ class Dashboard {
 			return;
 		}
 		$options = get_option( 'nukiwp__settings' );
-		if ( isset( $options['ondemand-pinlist'][ sanitize_text_field( $_GET['pin_name'] ) ] ) ) {
-			unset( $options['ondemand-pinlist'][ sanitize_text_field( $_GET['pin_name'] ) ] );
+		if ( isset( $options['ondemand-pinlist'][ sanitize_key( $_GET['id'] ) ][ sanitize_text_field( $_GET['pin_name'] ) ] ) ) {
+			unset( $options['ondemand-pinlist'][ sanitize_key( $_GET['id'] ) ][ sanitize_text_field( $_GET['pin_name'] ) ] );
 			update_option( 'nukiwp__settings', $options );
 		}
+        $this->redirect_admin( 0 );
 	}
 
 	/**
@@ -238,10 +249,18 @@ class Dashboard {
 			if ( 'unlock' === $_GET['action'] ) {
 				$nukiwp_api->unlock( sanitize_key( $_GET['id'] ) );
 			}
-			return true;
+            $this->redirect_admin();
 		}
 		return false;
 	}
+
+    public function redirect_admin( $delay=4, $url = '' ){
+	    if ( empty( $url ) ){
+            $url = admin_url();
+	    }
+	    header("Refresh: $delay; url=$url");
+    }
+
 }
 
 $dashboard = new Dashboard();
