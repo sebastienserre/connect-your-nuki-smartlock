@@ -426,6 +426,19 @@ if ( ! class_exists( 'Api' ) ) {
 			}
 			return $msg;
 		}
+
+		public function get_pincode( $id ){
+			if ( empty( $id ) ){
+				$id = get_the_ID();
+			}
+			$pincode = get_post_meta( $id, 'booking_pin', true );
+
+			if (! empty( $pincode ) ){
+				return $pincode;
+			}
+
+			return false;
+		}
 	}
 }
 
