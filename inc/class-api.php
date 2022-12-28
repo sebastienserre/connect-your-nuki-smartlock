@@ -427,6 +427,13 @@ if ( ! class_exists( 'Api' ) ) {
 			return $msg;
 		}
 
+		/**
+		 * Retrieve the pincode from DB.
+		 *
+		 * @param int $id order/post id where pincode is attached on.
+		 *
+		 * @return false|mixed
+		 */
 		public function get_pincode( $id ){
 			if ( empty( $id ) ){
 				$id = get_the_ID();
