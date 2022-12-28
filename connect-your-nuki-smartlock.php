@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Connect your Nuki Smartlock !
+ * Plugin Name: Connect your Nuki Smartlock!
  * Plugin URI: https://nuki-smartlock-for-wp.com/
  * Description: Connect your Nuki Smartlock to your WordPress and manage it!
  * Author: Nuki Smartlock for WP

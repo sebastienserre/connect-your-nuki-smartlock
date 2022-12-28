@@ -243,7 +243,7 @@ function nuki_wp_licences_page() {
         <h2><?php esc_html_e( 'Connect Nuki Licensses', 'connect-your-nuki-smartlock' ); ?></h2>
 
 		<?php
-		if ( defined( 'NUKIGF_VERSION' ) ) {
+		if ( defined( 'NUKIGF_VERSION' ) || defined( 'NUKIWC_VERSION' ) ) {
 			settings_fields( 'License-form' );
 			do_settings_sections( 'License-form' );
 			submit_button();
@@ -262,4 +262,22 @@ function nuki_wp_licences_page() {
 
     </form>
 	<?php
+}
+
+add_action( 'admin_init', 'nuki_wp_settings_init' );
+/**
+ * Register settings.
+ *
+ * @return void
+ */
+function nuki_wp_settings_init() {
+
+	add_settings_section(
+		'nuki_wp__License-form_section',
+		'',
+		'',
+		'License-form'
+	);
+
+
 }
