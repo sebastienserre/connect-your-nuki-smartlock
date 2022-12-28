@@ -5,7 +5,7 @@ Donate link: https://nuki-smartlock-for-wp.com/product/nuki-for-wordpress
 Requires at least: 5.8
 Tested up to: 6.1
 Requires PHP: 7.2
-Stable tag: 1.0.1
+Stable tag: 1.1.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -43,8 +43,12 @@ You can also just sponsors my work at [GH Sponsor](https://github.com/sponsors/s
 2. Dashboard Widget
 
 == Changelog ==
+
+= 1.1.0 -- 28 december 2022 =
+- Maintenance fix to work with Nuki for WooCommerce anf the Yith Booking integration.
+
 = 1.0.1 -- 07 december 2022 =
-- Correct link to delete gnerated pin code
+- Correct link to delete generated pin code
 
 = 1.0.0 -- 19 october 2022 =
 - add style to API Key error msg
