@@ -210,12 +210,56 @@ function nukiwp__manage_smartlock() {
 		$selected_smartlock = $settings['smartlock-managed'];
 	}
 	?>
-	<select name='nukiwp__settings[smartlock-managed]'>
+    <select name='nukiwp__settings[smartlock-managed]'>
 		<?php
 		foreach ( $smartlocks as $smartlock ) {
 			echo '<option value="' . esc_attr( $smartlock['smartlockId'] ) . '"' . selected( $selected_smartlock, $smartlock['smartlockId'], false ) . '>' . $smartlock['name'] . '</option>';
 		}
 		?>
-	</select>
+    </select>
+	<?php
+}
+
+/**
+ * Add admin menu.
+ *
+ * @return void
+ */
+function nuki_wp_add_admin_menu() {
+	add_submenu_page( 'connect_your_nuki_smartlock', __( 'Licenses', 'connect-your-nuki-smartlock' ), __( 'Licenses', 'connect-your-nuki-smartlock' ), 'manage_options', 'connect_nuki_licenses', 'nuki_wp_licences_page' );
+}
+
+add_action( 'admin_menu', 'nuki_wp_add_admin_menu', 15 );
+
+/**
+ * Create the option page.
+ *
+ * @return void
+ */
+function nuki_wp_licences_page() {
+	?>
+    <form action='options.php' method='post'>
+
+        <h2><?php esc_html_e( 'Connect Nuki Licensses', 'connect-your-nuki-smartlock' ); ?></h2>
+
+		<?php
+		if ( defined( 'NUKIGF_VERSION' ) ) {
+			settings_fields( 'License-form' );
+			do_settings_sections( 'License-form' );
+			submit_button();
+		} else {
+			?>
+            <div class="nuki-ads">
+                <a href="https://nuki-smartlock-for-wp.com/">
+					<?php
+					esc_html_e( 'Visit our shop ang get WooCommerce & Gravity Forms add-ons', 'connect-your-nuki-smartlock' );
+					?>
+                </a>
+            </div>
+			<?php
+		}
+		?>
+
+    </form>
 	<?php
 }
