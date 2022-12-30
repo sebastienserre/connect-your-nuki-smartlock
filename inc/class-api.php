@@ -281,19 +281,36 @@ if ( ! class_exists( 'Api' ) ) {
 				} else {
 
 					$pin[ $i ] = random_int( 1, 9 );
-					$b = $i - 1;
+					$b         = $i - 1;
 					$pin[ $i ] = $this->avoid_twice_same( $pin[ $b ], $pin[ $i ] );
 				}
 				$i ++;
 			}
 			ksort( $pin );
+
 			return implode( '', $pin );
+		}
+
+		public function generate_link( $smartlock_id ) {
+
+			// generate an uniq key, strong as a password.
+			$key = wp_generate_password();
+
+			// store it to compare it later
+			$hash                            = wp_hash_password( $key ); // use https://developer.wordpress.org/reference/functions/wp_check_password/ to compare.
+			$option                          = $this->get_settings();
+			$option['keys'][ $smartlock_id ] = $hash;
+			$this->save_settings( $option );
+
+			$link = home_url( '/nuki/' . $smartlock_id . '/' . $key );
+
+			return $link;
 		}
 
 		/**
 		 * For security reason, avoid to have twice the same digit next to each other.
 		 *
-		 * @param int $first_pin first digit to compare.
+		 * @param int $first_pin  first digit to compare.
 		 * @param int $second_pin second digit to compare.
 		 *
 		 * @return int
