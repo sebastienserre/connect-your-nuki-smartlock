@@ -134,19 +134,22 @@ if ( ! class_exists( 'Api' ) ) {
 					$args                            = wp_parse_args( $arg, $args );
 
 					$result = wp_remote_request( $url, $args );
-					$code = (int) wp_remote_retrieve_response_code( $result );
+					$code   = (int) wp_remote_retrieve_response_code( $result );
 					if ( 200 === $code ) {
 						$body   = wp_remote_retrieve_body( $result );
 						$result = json_decode( $body, true );
 					}
 					break;
 			}
-			if ( 200 === $code ) {
-				return $result;
-			} else {
-				return false;
+			switch ( $code ) {
+				case 200:
+				case 204:
+					break;
+				default:
+					$result = false;
 			}
 
+			return $result;
 		}
 
 		/**
