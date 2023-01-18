@@ -100,6 +100,9 @@ if ( ! class_exists( 'Api' ) ) {
 		 * @return array|false|mixed|\WP_Error
 		 */
 		public function api_call( $url, $method = 'get', $body = array() ) {
+			if ( empty( $this->apikey ) ) {
+				return false;
+			}
 			$args = array(
 				'headers' => array(
 					'Authorization' => 'Bearer ' . $this->apikey,
