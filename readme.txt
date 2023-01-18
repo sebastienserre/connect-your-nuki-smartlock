@@ -5,7 +5,7 @@ Donate link: https://nuki-smartlock-for-wp.com/product/nuki-for-wordpress
 Requires at least: 5.8
 Tested up to: 6.1
 Requires PHP: 7.2
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -25,7 +25,7 @@ You need to get an API token to https://web.nuki.io/#/login
 Official doc to get it: https://developer.nuki.io/page/nuki-web-api-1-4/3#heading--api-tokens
 
 = Is it possible to connect several smartlock ? =
-Yes, from version 0.5.0, Connect Your Nuki Smartlock will list all Nuki SMartlock connected to your NukiWeb account
+Yes, from version 0.5.0, Connect Your Nuki Smartlock will list all Nuki Smartlock connected to your NukiWeb account
 
 = Does this plugin developed by Nuki ? =
 No, I'm an independent WordPress developer, owning a Nuki Smartlock 3.0 Pro.
@@ -43,6 +43,11 @@ You can also just sponsors my work at [GH Sponsor](https://github.com/sponsors/s
 2. Dashboard Widget
 
 == Changelog ==
+
+= 1.1.1 -- 18th January 2023 =
+- Improve license management for premium plugins
+- Generate a link in the BO to unlock
+- Fix the pincode sending to keypad method.
 
 = 1.1.0 -- 28 december 2022 =
 - Maintenance fix to work with Nuki for WooCommerce anf the Yith Booking integration.
