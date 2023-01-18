@@ -1,6 +1,8 @@
 # https://github.com/php-actions/example-phpunit
 # https://github.com/marketplace/actions/phpunit-php-actions
-name: CI-php73
+
+
+name: CI
 
 on: [ push ]
 
@@ -14,9 +16,10 @@ jobs:
       - uses: php-actions/composer@v6
 
       - name: PHPUnit Tests
-        uses: php-actions/phpunit@v9
+        uses: php-actions/phpunit@master
+        env:
+          TEST_NAME: Scarlett
         with:
           bootstrap: vendor/autoload.php
-          configuration: phpunit.xml
+          configuration: test/phpunit.xml
           args: --coverage-text
-          php_version: "7.3"
