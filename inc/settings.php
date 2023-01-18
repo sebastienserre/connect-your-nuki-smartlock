@@ -240,7 +240,7 @@ function nuki_wp_licences_page() {
 	?>
     <form action='options.php' method='post'>
 
-        <h2><?php esc_html_e( 'Connect Nuki Licensses', 'connect-your-nuki-smartlock' ); ?></h2>
+        <h2><?php esc_html_e( 'Connect Nuki Licenses', 'connect-your-nuki-smartlock' ); ?></h2>
 
 		<?php
 		if ( defined( 'NUKIGF_VERSION' ) || defined( 'NUKIWC_VERSION' ) ) {
