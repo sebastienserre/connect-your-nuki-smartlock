@@ -252,7 +252,7 @@ function nuki_wp_licences_page() {
             <div class="nuki-ads">
                 <a href="https://nuki-smartlock-for-wp.com/">
 					<?php
-					esc_html_e( 'Visit our shop ang get WooCommerce & Gravity Forms add-ons', 'connect-your-nuki-smartlock' );
+					esc_html_e( 'Visit our shop and get WooCommerce add-on', 'connect-your-nuki-smartlock' );
 					?>
                 </a>
             </div>
