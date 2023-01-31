@@ -378,8 +378,8 @@ if ( ! class_exists( 'Api' ) ) {
 				'allowedFromDate'  => $pin_data['start'],
 				'allowedUntilDate' => $pin_data['end'],
 				'allowedWeekDays'  => 127,
-				'allowedFromTime'  => 0,
-				'allowedUntilTime' => 0,
+				'allowedFromTime'  => $pin_data['allowedFromTime'],
+				'allowedUntilTime' => $pin_data['allowedUntilTime'],
 				'accountUserId'    => 0,
 				'type'             => 13,
 				'code'             => $pin_data['pincode'],
@@ -485,6 +485,16 @@ if ( ! class_exists( 'Api' ) ) {
 			}
 
 			return false;
+		}
+
+		public function minutes_from_midnight( $date ) {
+			$current     = wp_date( 'U', $date );
+			$start       = wp_date( 'Y-m-d', $date );
+			$midnight_ts = strtotime( $start );
+			$diff        = (int) abs( $current - $midnight_ts );
+			$diff        = $diff / 60;
+
+			return $diff;
 		}
 
 		public function get_expired_pincode() {
