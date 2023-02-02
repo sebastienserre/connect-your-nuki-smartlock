@@ -55,8 +55,9 @@ if ( ! class_exists( 'Api' ) ) {
 			if ( ! empty( $this->settings['apikey'] ) ) {
 				$this->apikey = $this->settings['apikey'];
 			}
-			$this->remote_url  = 'https://api.nuki.io';
+			$this->remote_url   = 'https://api.nuki.io';
 			$this->smartlock_id = $this->get_smartlock_id();
+			add_action( 'admin_init', array( $this, 'get_smartlock_authorization' ), 99 );
 		}
 
 		/**
@@ -138,6 +139,21 @@ if ( ! class_exists( 'Api' ) ) {
 
 					$result = wp_remote_request( $url, $args );
 					$code   = (int) wp_remote_retrieve_response_code( $result );
+					if ( 200 === $code ) {
+						$body   = wp_remote_retrieve_body( $result );
+						$result = json_decode( $body, true );
+					}
+					break;
+				case 'delete':
+					$arg                             = array(
+						'body'   => wp_json_encode( $body ),
+						'method' => 'DELETE',
+						'accept' => 'application/json',
+					);
+					$args['headers']['Content-Type'] = 'application/json';
+					$args                            = wp_parse_args( $arg, $args );
+					$result                          = wp_remote_request( $url, $args );
+					$code                            = (int) wp_remote_retrieve_response_code( $result );
 					if ( 200 === $code ) {
 						$body   = wp_remote_retrieve_body( $result );
 						$result = json_decode( $body, true );
@@ -463,12 +479,58 @@ if ( ! class_exists( 'Api' ) ) {
 			}
 			$pincode = get_post_meta( $id, 'booking_pin', true );
 
-			if (! empty( $pincode ) ){
+			if ( ! empty( $pincode ) ) {
 				return $pincode;
 			}
 
 			return false;
 		}
+
+		public function delete_pincode( $name ) {
+
+		}
+
+		public function get_expired_pincode() {
+			$pincodes = get_transient( 'nukiData' );
+		}
+
+		public function get_smartlock_authorization() {
+			$auth       = array();
+			$smartlocks = $this->get_smartlocks();
+			foreach ( $smartlocks as $smartlock ) {
+				$smartlock_ids[] = $smartlock['smartlockId'];
+			}
+			foreach ( $smartlock_ids as $smartlock_id ) {
+				$url                   = $this->remote_url . '/smartlock/' . $smartlock_id . '/auth?types=13';
+				$results               = $this->api_call( $url, 'get' );
+				$auth[ $smartlock_id ] = $results;
+			}
+			foreach ( $auth as $smartlocks ) {
+				foreach ( $smartlocks as $authorization ) {
+					$ts       = new \DateTime( $authorization['allowedUntilDate'] );
+					$now      = new \DateTime( 'now' );
+					$interval = $now->diff( $ts );
+					if ( 0 === $interval->invert ) {
+						//delete
+						$this->delete_auth( $authorization['id'] );
+					}
+				}
+			}
+
+			return $auth;
+		}
+
+		public function delete_auth( $id ) {
+			// nonce ?
+			if ( empty( $id ) ) {
+				return false;
+			}
+			$id  = array( $id );
+			$url = $this->remote_url . '/smartlock/auth';
+			$this->api_call( $url, 'delete', $id );
+
+		}
+
 	}
 }
 
