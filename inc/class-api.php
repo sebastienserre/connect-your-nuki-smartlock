@@ -154,7 +154,7 @@ if ( ! class_exists( 'Api' ) ) {
 					$args                            = wp_parse_args( $arg, $args );
 					$result                          = wp_remote_request( $url, $args );
 					$code                            = (int) wp_remote_retrieve_response_code( $result );
-					if ( 200 === $code ) {
+					if ( 200 === $code || 204 === $code ) {
 						$body   = wp_remote_retrieve_body( $result );
 						$result = json_decode( $body, true );
 					}
@@ -507,12 +507,15 @@ if ( ! class_exists( 'Api' ) ) {
 			}
 			foreach ( $auth as $smartlocks ) {
 				foreach ( $smartlocks as $authorization ) {
-					$ts       = new \DateTime( $authorization['allowedUntilDate'] );
-					$now      = new \DateTime( 'now' );
-					$interval = $now->diff( $ts );
-					if ( 0 === $interval->invert ) {
-						//delete
-						$this->delete_auth( $authorization['id'] );
+					if ( ! empty( $authorization['allowedUntilDate'] ) ) {
+						$ts                 = new \DateTime( $authorization['allowedUntilDate'] );
+						$allowed_until_date = $ts->format( 'U' );
+						$now                = new \DateTime( 'now' );
+						$current            = $now->format( 'U' );
+						if ( $current > $allowed_until_date ) {
+							//delete
+							$this->delete_auth( $authorization['id'] );
+						}
 					}
 				}
 			}
