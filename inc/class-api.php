@@ -163,7 +163,8 @@ if ( ! class_exists( 'Api' ) ) {
 			switch ( $code ) {
 				case 200:
 				case 204:
-					break;
+				$result = true;
+				break;
 				default:
 					$result = false;
 			}
@@ -484,10 +485,6 @@ if ( ! class_exists( 'Api' ) ) {
 			}
 
 			return false;
-		}
-
-		public function delete_pincode( $name ) {
-
 		}
 
 		public function get_expired_pincode() {

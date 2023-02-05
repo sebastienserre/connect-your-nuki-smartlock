@@ -13,6 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 add_action( 'nuki_cron_hook', 'nukiwp_cron_check' );
 
+
 if ( ! function_exists( 'nukiwp_cron_check' ) ) {
 	/**
 	 * Will check on every interval if the door is locked.
@@ -45,4 +46,9 @@ if ( ! function_exists( 'nukiwp_cron_check' ) ) {
 			}
 		}
 	}
+}
+
+add_action( 'nuki_cron_hook', 'nukiwp_delete_old_picode' );
+function nukiwp_delete_old_picode() {
+	\Nuki\API\NukiAPI()->get_smartlock_authorization();
 }

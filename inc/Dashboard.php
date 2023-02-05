@@ -8,6 +8,7 @@
 namespace Nuki\Dashboard;
 
 use Nuki\API\api;
+use function Nuki\API\NukiAPI;
 use function Nuki\Bookings\nukiwp_api;
 
 /**
@@ -194,13 +195,15 @@ class Dashboard {
 			return;
 		}
 		if ( ! empty( $_GET['action'] ) && 'generate-pin' === $_GET['action'] && ! empty( $_GET['id'] ) ) {
-			$user                                     = wp_get_current_user();
-			$username                                 = $user->user_login;
-			$options                                  = get_option( 'nukiwp__settings' );
-			$pin_name                                 = $username . ' ' . wp_date( 'd/m/Y H\hi s', time() );
-			$pin_code                                 = $nuki->generate_pin();
+			$user            = wp_get_current_user();
+			$options         = get_option( 'nukiwp__settings' );
+			$permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
+
+			$pin_name                                                                = 'auto-' . substr( str_shuffle( $permitted_chars ), 0, 15 );
+			$l                                                                       = strlen( $pin_name );
+			$pin_code                                                                = $nuki->generate_pin();
 			$options['ondemand-pinlist'][ sanitize_key( $_GET['id'] ) ][ $pin_name ] = $pin_code;
-			$pin_data = array(
+			$pin_data                                                                = array(
 				'name'    => $pin_name,
 				'start'   => wp_date( 'c', time() ),
 				'end'     => wp_date( 'c', time() + 24 * HOUR_IN_SECONDS ),
@@ -208,7 +211,7 @@ class Dashboard {
 			);
 			$nuki->send_pin_to_keypad( $pin_data, sanitize_key( $_GET['id'] ) );
 			update_option( 'nukiwp__settings', $options );
-            $this->redirect_admin( 0 );
+			$this->redirect_admin( 0 );
 		}
 	}
 
@@ -226,8 +229,11 @@ class Dashboard {
 		}
 		$options = get_option( 'nukiwp__settings' );
 		if ( isset( $options['ondemand-pinlist'][ sanitize_key( $_GET['id'] ) ][ sanitize_text_field( $_GET['pin_name'] ) ] ) ) {
-			unset( $options['ondemand-pinlist'][ sanitize_key( $_GET['id'] ) ][ sanitize_text_field( $_GET['pin_name'] ) ] );
-			update_option( 'nukiwp__settings', $options );
+			$delete = NukiAPI()->delete_auth( sanitize_text_field( $_GET['pin_name'] ) );
+			if ( $delete ) {
+				unset( $options['ondemand-pinlist'][ sanitize_key( $_GET['id'] ) ][ sanitize_text_field( $_GET['pin_name'] ) ] );
+				update_option( 'nukiwp__settings', $options );
+			}
 		}
         $this->redirect_admin( 0 );
 	}
