@@ -163,8 +163,8 @@ if ( ! class_exists( 'Api' ) ) {
 			switch ( $code ) {
 				case 200:
 				case 204:
-				$result = true;
 				break;
+
 				default:
 					$result = false;
 			}
@@ -487,14 +487,22 @@ if ( ! class_exists( 'Api' ) ) {
 			return false;
 		}
 
-		public function minutes_from_midnight( $date ) {
-			$current     = wp_date( 'U', $date );
-			$start       = wp_date( 'Y-m-d', $date );
-			$midnight_ts = strtotime( $start );
-			$diff        = (int) abs( $current - $midnight_ts );
-			$diff        = $diff / 60;
+		public function minutes_from_midnight( $date, $from ) {
+			$options = get_option( 'nukiwc_settings' );
+			$hour    = explode( '-', wp_date( 'H-i', $date ) );
+			$base    = ( $hour[0] * 60 ) + $hour['1'];
 
-			return $diff;
+			// before
+			$min = $options['min_before'];
+			$min = $base - $min;
+
+			// after
+			if ( ! $from ) {
+				$min = $options['min_after'];
+				$min = $base + $min;
+			}
+
+			return $min;
 		}
 
 		public function get_expired_pincode() {
