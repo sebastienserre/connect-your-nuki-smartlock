@@ -197,13 +197,12 @@ function nukiwp_time_selector( $hour = 'start' ) {
  * @return void
  */
 function nukiwp__manage_smartlock() {
-	$nuki = new \Nuki\API\Api();
-	$smartlocks = $nuki->get_smartlock();
+	$smartlocks = \Nuki\API\NukiAPI()->get_smartlock();
 	if ( empty( $smartlocks ) ) {
 		echo '<span class="nuki-error">' . esc_html__( 'Wrong or empty API key', 'connect-your-nuki-smartlock' ) . '</span>';
 		return;
 	}
-	$settings = $nuki->get_settings();
+	$settings = \Nuki\API\NukiAPI()->get_settings();
 
 	$selected_smartlock = '';
 	if ( ! empty( $settings['smartlock-managed'] ) ) {
