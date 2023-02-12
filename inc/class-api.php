@@ -489,7 +489,7 @@ if ( ! class_exists( 'Api' ) ) {
 
 		public function minutes_from_midnight( $date, $from ) {
 			$options = get_option( 'nukiwc_settings' );
-			$hour    = explode( '-', wp_date( 'H-i', $date ) );
+			$hour    = explode( '-', $date );
 			$base    = ( $hour[0] * 60 ) + $hour['1'];
 
 			// before
@@ -503,6 +503,17 @@ if ( ! class_exists( 'Api' ) ) {
 			}
 
 			return $min;
+		}
+
+		//https://techarise.com/convert-local-time-to-utc-in-php/
+		public function convert_to_UTC( $date ) {
+			$timezone_from = wp_timezone();
+			$timezone_from = $timezone_from->getName();
+			$newDateTime   = new \DateTime( $date, new \DateTimeZone( $timezone_from ) );
+			$newDateTime->setTimezone( new \DateTimeZone( "UTC" ) );
+			$dateTimeUTC = $newDateTime->format( "c" );
+
+			return $dateTimeUTC;
 		}
 
 		public function get_expired_pincode() {
