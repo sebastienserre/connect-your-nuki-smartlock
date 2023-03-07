@@ -192,7 +192,7 @@ function nukiwp_time_selector( $hour = 'start' ) {
 }
 
 /**
- * Display which Smartllock will be managed.
+ * Display which Smartlock will be managed.
  *
  * @return void
  */
