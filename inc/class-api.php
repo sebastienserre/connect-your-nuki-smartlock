@@ -3,7 +3,7 @@
  * Nuki API.
  *
  * @package Connect-your-nuki-smartlock
- * @see https://api.nuki.io/
+ * @see     https://api.nuki.io/
  */
 
 namespace Nuki\API;
@@ -87,6 +87,7 @@ if ( ! class_exists( 'Api' ) ) {
 		 */
 		public function save_settings( $options ) {
 			$result = update_option( 'nukiwp__settings', $options );
+
 			return $result;
 
 		}
@@ -94,9 +95,9 @@ if ( ! class_exists( 'Api' ) ) {
 		/**
 		 * Methods to easily make call to Nuki API.
 		 *
-		 * @param string $url NukiWeb API URL.
+		 * @param string $url    NukiWeb API URL.
 		 * @param string $method can be 'get', 'post, 'put', 'delete'.
-		 * @param array  $body request parameters.
+		 * @param array  $body   request parameters.
 		 *
 		 * @return array|false|mixed|\WP_Error
 		 */
@@ -114,7 +115,7 @@ if ( ! class_exists( 'Api' ) ) {
 				case 'get':
 				default:
 					$result = wp_remote_get( $url, $args );
-					$code = (int) wp_remote_retrieve_response_code( $result );
+					$code   = (int) wp_remote_retrieve_response_code( $result );
 					if ( 200 === $code ) {
 						$body   = wp_remote_retrieve_body( $result );
 						$result = json_decode( $body, true );
@@ -122,7 +123,7 @@ if ( ! class_exists( 'Api' ) ) {
 					break;
 				case 'post':
 					$result = wp_remote_post( $url, $args );
-					$code = (int) wp_remote_retrieve_response_code( $result );
+					$code   = (int) wp_remote_retrieve_response_code( $result );
 					if ( 200 === $code ) {
 						$body   = wp_remote_retrieve_body( $result );
 						$result = json_decode( $body, true );
@@ -163,7 +164,7 @@ if ( ! class_exists( 'Api' ) ) {
 			switch ( $code ) {
 				case 200:
 				case 204:
-				break;
+					break;
 
 				default:
 					$result = false;
@@ -273,7 +274,7 @@ if ( ! class_exists( 'Api' ) ) {
 		 */
 		public function get_state( $smartlock_managed ) {
 			$smartlock = $this->get_smartlock_details( $smartlock_managed );
-			$state = '';
+			$state     = '';
 			if ( ! empty( $smartlock['state']['state'] ) ) {
 				$state = $smartlock['state']['state'];
 			}
@@ -351,13 +352,14 @@ if ( ! class_exists( 'Api' ) ) {
 					$this->avoid_twice_same( $first_pin, $second_pin );
 				}
 			}
+
 			return $second_pin;
 		}
 
 		/**
 		 * Send pin to keypad. A keypad must be paired with the Smartlock.
 		 *
-		 * @param array  $pin_data array with data needed to create the pin.
+		 * @param array  $pin_data     array with data needed to create the pin.
 		 * @param string $smartlock_id Smartlock ID to send the pincode
 		 *
 		 * @return array|\WP_Error
@@ -464,6 +466,7 @@ if ( ! class_exists( 'Api' ) ) {
 				default:
 					$msg = '';
 			}
+
 			return $msg;
 		}
 
@@ -474,8 +477,8 @@ if ( ! class_exists( 'Api' ) ) {
 		 *
 		 * @return false|mixed
 		 */
-		public function get_pincode( $id ){
-			if ( empty( $id ) ){
+		public function get_pincode( $id ) {
+			if ( empty( $id ) ) {
 				$id = get_the_ID();
 			}
 			$pincode = get_post_meta( $id, 'booking_pin', true );
@@ -523,6 +526,9 @@ if ( ! class_exists( 'Api' ) ) {
 		public function get_smartlock_authorization() {
 			$auth       = array();
 			$smartlocks = $this->get_smartlocks();
+			if ( empty( $smartlocks ) ) {
+				return;
+			}
 			foreach ( $smartlocks as $smartlock ) {
 				$smartlock_ids[] = $smartlock['smartlockId'];
 			}
