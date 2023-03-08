@@ -5,7 +5,7 @@ Donate link: https://nuki-smartlock-for-wp.com/product/nuki-for-wordpress
 Requires at least: 5.8
 Tested up to: 6.1
 Requires PHP: 7.4
-Stable tag: 1.2.1
+Stable tag: 1.3.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -38,11 +38,18 @@ If you're a developer, you can send pull request to [Github](https://github.com/
 If you're Polyglot, you can help translating this plugin at [Translate Plugins](https://translate.wordpress.org/projects/wp-plugins/connect-your-nuki-smartlock/)
 You can also just sponsors my work at [GH Sponsor](https://github.com/sponsors/sebastienserre/)
 
+= How to get a Nuki Smartlock ? =
+Visit https://nuki-smartlock-for-wp.com/30e-discount-on-your-nuki-smartlock for instructions.
+
 == Screenshots ==
 1. Settings
 2. Dashboard Widget
 
 == Changelog ==
+= 1.3.0 -- 8th March 2023 =
+- Add time managment.
+- Fix list of smartlocks available.
+
 = 1.2.0 -- 5th February 2023 =
 - Delete old pincode.
 - UI improvement.
