@@ -163,7 +163,7 @@ if ( ! class_exists( 'Api' ) ) {
 			switch ( $code ) {
 				case 200:
 				case 204:
-				break;
+					break;
 
 				default:
 					$result = false;
@@ -523,6 +523,9 @@ if ( ! class_exists( 'Api' ) ) {
 		public function get_smartlock_authorization() {
 			$auth       = array();
 			$smartlocks = $this->get_smartlocks();
+			if ( empty( $smartlocks ) ) {
+				return;
+			}
 			foreach ( $smartlocks as $smartlock ) {
 				$smartlock_ids[] = $smartlock['smartlockId'];
 			}
