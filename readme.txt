@@ -21,8 +21,8 @@ Available at [Nuki Smartlock for WordPress](https://nuki-smartlock-for-wp.com/).
 
 == Frequently Asked Questions ==
 = How to connect my Smartlock ? =
-You need to get an API token to https://web.nuki.io/#/login
-Official doc to get it: https://developer.nuki.io/page/nuki-web-api-1-4/3#heading--api-tokens
+You need to get an API token to [Nuki Web](https://web.nuki.io/#/login)
+Official doc to get it: [doc](https://developer.nuki.io/page/nuki-web-api-1-4/3#heading--api-tokens)
 
 = Is it possible to connect several smartlock ? =
 Yes, from version 0.5.0, Connect Your Nuki Smartlock will list all Nuki Smartlock connected to your NukiWeb account
@@ -39,7 +39,7 @@ If you're Polyglot, you can help translating this plugin at [Translate Plugins](
 You can also just sponsors my work at [GH Sponsor](https://github.com/sponsors/sebastienserre/)
 
 = How to get a Nuki Smartlock ? =
-Visit https://nuki-smartlock-for-wp.com/30e-discount-on-your-nuki-smartlock for instructions.
+Visit [https://nuki-smartlock-for-wp.com/30e-discount-on-your-nuki-smartlock]( https://nuki-smartlock-for-wp.com/30e-discount-on-your-nuki-smartlock ) for instructions.
 
 == Screenshots ==
 1. Settings
