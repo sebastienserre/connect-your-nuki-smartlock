@@ -533,7 +533,7 @@ if ( ! class_exists( 'Api' ) ) {
 			$auth       = array();
 			$smartlocks = $this->get_smartlocks();
 			if ( empty( $smartlocks ) ) {
-				return;
+				return $auth;
 			}
 			foreach ( $smartlocks as $smartlock ) {
 				$smartlock_ids[] = $smartlock['smartlockId'];
@@ -570,8 +570,8 @@ if ( ! class_exists( 'Api' ) ) {
 			$url = $this->remote_url . '/smartlock/auth';
 			$this->api_call( $url, 'delete', $id );
 
+			return true;
 		}
-
 	}
 }
 
