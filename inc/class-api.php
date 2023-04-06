@@ -519,8 +519,14 @@ if ( ! class_exists( 'Api' ) ) {
 			return $dateTimeUTC;
 		}
 
-		public function get_expired_pincode() {
-			$pincodes = get_transient( 'nukiData' );
+		public function get_times( $start_date, $end_date ) {
+			$times                  = array();
+			$times['allowed_from']  = NukiAPI()->minutes_from_midnight( $start_date, true );
+			$times['allowed_until'] = NukiAPI()->minutes_from_midnight( $end_date, false );
+			$times['start_atom']    = NukiAPI()->convert_to_UTC( $start_date );
+			$times['end_atom']      = NukiAPI()->convert_to_UTC( $end_date );
+
+			return $times;
 		}
 
 		public function get_smartlock_authorization() {
