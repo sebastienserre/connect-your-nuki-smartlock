@@ -518,8 +518,6 @@ if ( ! class_exists( 'Api' ) ) {
 				$min = '+' . $options['min_after'] . ' minutes';
 			}
 
-
-			//$test_date = date('Y-m-d H:i:s', strtotime('-5 minutes'));
 			$timezone_from = wp_timezone();
 			$timezone_from = $timezone_from->getName();
 			$newDateTime   = new \DateTime( $date, new \DateTimeZone( $timezone_from ) );
@@ -546,8 +544,8 @@ if ( ! class_exists( 'Api' ) ) {
 			$times                  = array();
 			$times['allowed_from']  = NukiAPI()->minutes_from_midnight( $start_date, true );
 			$times['allowed_until'] = NukiAPI()->minutes_from_midnight( $end_date, false );
-			$times['start_atom']    = NukiAPI()->convert_to_UTC( $start_date );
-			$times['end_atom']      = NukiAPI()->convert_to_UTC( $end_date );
+			$times['start_atom']    = NukiAPI()->convert_to_UTC( $start_date, true );
+			$times['end_atom']      = NukiAPI()->convert_to_UTC( $end_date, false );
 
 			return $times;
 		}
