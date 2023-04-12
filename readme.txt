@@ -5,7 +5,7 @@ Donate link: https://nuki-smartlock-for-wp.com/product/nuki-for-wordpress
 Requires at least: 5.8
 Tested up to: 6.2
 Requires PHP: 7.4
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -46,9 +46,14 @@ Visit [https://nuki-smartlock-for-wp.com/30e-discount-on-your-nuki-smartlock]( h
 2. Dashboard Widget
 
 == Changelog ==
+
+= 1.3.3 -- 12th April 2023 =
+- Fix notices
+- Fix a fatale error which prevent the WooCommerce addon to work properly. Thanks ateliernovae.de
+
 = 1.3.2 -- 7th April 2023 =
 - Fix notices
-- Improve WooCommerce API (for Pro version
+- Improve WooCommerce API (for Pro version)
 
 = 1.3.1 -- 8th March 2023 =
 - Fix a warning on API settings.
