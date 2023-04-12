@@ -492,7 +492,7 @@ if ( ! class_exists( 'Api' ) ) {
 
 		public function minutes_from_midnight( $date, $from ) {
 			$options = get_option( 'nukiwc_settings' );
-			$date    = date_i18n( 'H-i' );
+			$date    = date_i18n( 'H-i', $date );
 			$hour    = explode( '-', $date );
 			$base    = ( $hour[0] * 60 ) + $hour['1'];
 
@@ -521,8 +521,9 @@ if ( ! class_exists( 'Api' ) ) {
 
 			$timezone_from = wp_timezone();
 			$timezone_from = $timezone_from->getName();
-			$newDateTime   = new \DateTime( $date, new \DateTimeZone( $timezone_from ) );
-			$interval      = \DateInterval::createFromDateString( $min );
+			$newDateTime   = new \DateTime( '@' . $date, new \DateTimeZone( $timezone_from ) );
+			$newDateTime->setTimestamp( $date );
+			$interval = \DateInterval::createFromDateString( $min );
 			$newDateTime->add( $interval );
 			$date = $newDateTime->format( 'c' );
 
