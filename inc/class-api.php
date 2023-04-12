@@ -492,6 +492,7 @@ if ( ! class_exists( 'Api' ) ) {
 
 		public function minutes_from_midnight( $date, $from ) {
 			$options = get_option( 'nukiwc_settings' );
+			$date    = date_i18n( 'H-i' );
 			$hour    = explode( '-', $date );
 			$base    = ( $hour[0] * 60 ) + $hour['1'];
 
