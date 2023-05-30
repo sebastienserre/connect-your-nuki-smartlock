@@ -87,11 +87,11 @@ function nukiwp__settings_init() {
 function nukiwp_apikey_render() {
 
 	$options = get_option( 'nukiwp__settings' );
-	if ( empty( $options ) ) {
-		return;
-	}
+
 	?>
-    <input type='text' name='nukiwp__settings[apikey]' value='<?php echo esc_attr( $options['apikey'] ); ?>'>
+    <input type='text' name='nukiwp__settings[apikey]' value='<?php if ( ! empty( $options ) ) {
+		echo esc_attr( $options['apikey'] );
+	} ?>'>
 	<?php
 
 }
