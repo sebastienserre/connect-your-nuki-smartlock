@@ -66,7 +66,7 @@ if ( ! class_exists( 'Connect_Nuki_Smartlock' ) ) {
 		}
 
 		public function load_styles(){
-			wp_enqueue_style( 'nuki-dashboard-styles', NUKIWP_PLUGIN_URL . 'assets/css/admin-nuki.min.css');
+			wp_enqueue_style( 'nuki-dashboard-styles', NUKIWP_PLUGIN_URL . 'assets/css/admin-nuki.min.css', '', 1.0 );
 		}
 
 	}
