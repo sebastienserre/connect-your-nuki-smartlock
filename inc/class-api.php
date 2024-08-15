@@ -509,27 +509,6 @@ if ( ! class_exists( 'Api' ) ) {
 			return $min;
 		}
 
-		public function get_start_end_hours( $date, $from ) {
-			$options = get_option( 'nukiwc_settings' );
-
-			// before
-			$min = '-' . $options['min_before'] . ' minutes';
-			// after
-			if ( ! $from ) {
-				$min = '+' . $options['min_after'] . ' minutes';
-			}
-
-			$timezone_from = wp_timezone();
-			$timezone_from = $timezone_from->getName();
-			$newDateTime   = new \DateTime( '@' . $date, new \DateTimeZone( $timezone_from ) );
-			$newDateTime->setTimestamp( $date );
-			$interval = \DateInterval::createFromDateString( $min );
-			$newDateTime->add( $interval );
-			$date = $newDateTime->format( 'c' );
-
-			return $date;
-		}
-
 		//https://techarise.com/convert-local-time-to-utc-in-php/
 		public function convert_to_UTC( $date, $from ) {
 			$date          = $this->get_start_end_hours( $date, $from );
