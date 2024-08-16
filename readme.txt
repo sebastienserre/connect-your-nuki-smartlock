@@ -5,7 +5,7 @@ Donate link: https://nuki-smartlock-for-wp.com/product/nuki-for-wordpress
 Requires at least: 5.8
 Tested up to: 6.6
 Requires PHP: 7.4
-Stable tag: 1.3.7
+Stable tag: 1.3.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -46,9 +46,6 @@ Visit [https://nuki-smartlock-for-wp.com/30e-discount-on-your-nuki-smartlock]( h
 2. Dashboard Widget
 
 == Changelog ==
-
-= 1.3.7 -- 15th August 2024 =
-- fix a fatale error on activation
 
 = 1.3.5+1.3.6 -- 14th August 2024 =
 - fix a Warning in the settings
