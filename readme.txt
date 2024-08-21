@@ -47,6 +47,15 @@ Visit [https://nuki-smartlock-for-wp.com/30e-discount-on-your-nuki-smartlock]( h
 
 == Changelog ==
 
+= 1.3.8 -- 19 August 2024 =
+- Improve French Translation (l10n)
+- Yith Booking: Create and send the pincode on Paid Satust (instead of Complete Order)
+- Yith Booking: Email and WooCommerce emails. Add a {pincode} placeholder to show tne pincode in your templates
+- Yith Booking: Add the pincode in the email Booking details
+- Yith Booking: Show the pincode in the "My Account" page, on Booking details.
+- Prevent a new pincode generation if a booking/order already has one.
+- Code cleaning
+
 = 1.3.5+1.3.6 -- 14th August 2024 =
 - fix a Warning in the settings
 
