@@ -492,6 +492,9 @@ if ( ! class_exists( 'Api' ) ) {
 
 		public function minutes_from_midnight( $date, $from ) {
 			$options = get_option( 'nukiwc_settings' );
+			if ( ! $options ){
+				return $date;
+			}
 			$date    = date_i18n( 'H-i', $date );
 			$hour    = explode( '-', $date );
 			$base    = ( $hour[0] * 60 ) + $hour['1'];
@@ -511,7 +514,9 @@ if ( ! class_exists( 'Api' ) ) {
 
 		public function get_start_end_hours( $date, $from ) {
 			$options = get_option( 'nukiwc_settings' );
-
+			if ( ! $options ){
+				return $date;
+			}
 			// before
 			$min = '-' . $options['min_before'] . ' minutes';
 			// after
