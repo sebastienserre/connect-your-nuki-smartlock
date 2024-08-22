@@ -5,7 +5,7 @@ Donate link: https://nuki-smartlock-for-wp.com/product/nuki-for-wordpress
 Requires at least: 5.8
 Tested up to: 6.6
 Requires PHP: 7.4
-Stable tag: 1.3.8
+Stable tag: 1.3.9
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -46,6 +46,9 @@ Visit [https://nuki-smartlock-for-wp.com/30e-discount-on-your-nuki-smartlock]( h
 2. Dashboard Widget
 
 == Changelog ==
+
+= 1.3.9 -- 22 August 2024 =
+- Revert date/time improvment. No more pincode were created on Yith Booking & appointment compatibility
 
 = 1.3.8 -- 19 August 2024 =
 - Improve French Translation (l10n)
