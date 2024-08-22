@@ -492,9 +492,6 @@ if ( ! class_exists( 'Api' ) ) {
 
 		public function minutes_from_midnight( $date, $from ) {
 			$options = get_option( 'nukiwc_settings' );
-			if ( ! $options ){
-				return $date;
-			}
 			$date    = date_i18n( 'H-i', $date );
 			$hour    = explode( '-', $date );
 			$base    = ( $hour[0] * 60 ) + $hour['1'];
@@ -514,9 +511,7 @@ if ( ! class_exists( 'Api' ) ) {
 
 		public function get_start_end_hours( $date, $from ) {
 			$options = get_option( 'nukiwc_settings' );
-			if ( ! $options ){
-				return $date;
-			}
+
 			// before
 			$min = '-' . $options['min_before'] . ' minutes';
 			// after
@@ -540,8 +535,7 @@ if ( ! class_exists( 'Api' ) ) {
 			$date          = $this->get_start_end_hours( $date, $from );
 			$timezone_from = wp_timezone();
 			$timezone_from = $timezone_from->getName();
-			$datetime = new \DateTime();
-			$newDateTime = $datetime->createFromFormat( 'U', $date, new \DateTimeZone( $timezone_from ));
+			$newDateTime   = new \DateTime( $date, new \DateTimeZone( $timezone_from ) );
 			$newDateTime->setTimezone( new \DateTimeZone( "UTC" ) );
 			$dateTimeUTC = $newDateTime->format( "c" );
 
