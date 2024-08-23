@@ -5,7 +5,7 @@ Donate link: https://nuki-smartlock-for-wp.com/product/nuki-for-wordpress
 Requires at least: 5.8
 Tested up to: 6.6
 Requires PHP: 7.4
-Stable tag: 1.3.9
+Stable tag: 1.3.10
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -15,8 +15,8 @@ Connect your Nuki.io smartlock to your WordPress admin.
 By connecting your Nuki Smartlocks to your WordPress admin, you\'ll be able to schedule an autolock between 2 hours.
 A Dashboard Widget allow you to quickly see your Smartlocks state (battery level, lock state and more soon) . It will allow you to create pincode in one click if a Nuki Keypad is paired with your Smartlock.
 
-## WooCommerce Bookings Addons ##
-A WooCommerce Bookings addons is available. It will allow you to create & send to the Nuki Keypad a pin code each time a booking order is completed on your WordPress + WooCommerce website.
+## WooCommerce Bookings & Yith Booking and Appointment Addons ##
+A WooCommerce Bookings & Yith Booking and Appointment addon is available. It will allow you to create & send to the Nuki Keypad a pin code each time a booking order is completed on your WordPress + WooCommerce website.
 Available at [Nuki Smartlock for WordPress](https://nuki-smartlock-for-wp.com/).
 
 == Frequently Asked Questions ==
@@ -46,6 +46,8 @@ Visit [https://nuki-smartlock-for-wp.com/30e-discount-on-your-nuki-smartlock]( h
 2. Dashboard Widget
 
 == Changelog ==
+= 1.3.10 -- 23 August 2024 =
+- force update
 
 = 1.3.9 -- 22 August 2024 =
 - Revert date/time improvment. No more pincode were created on Yith Booking & appointment compatibility
