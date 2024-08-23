@@ -52,6 +52,7 @@ class Dashboard {
 
 		$smartlocks = $nuki->get_smartlocks();
 		$options = get_option( 'nukiwp__settings' );
+        if ( ! $options ){
 		?>
 		<div class="nuki_dashboard">
 			<?php
@@ -178,6 +179,15 @@ class Dashboard {
 					<?php
 				}
 			}
+        } else {
+            ?>
+            <p>
+                <?php
+                _e( 'No smartlock set in the Nuki settings', 'connect-your-nuki-smartlock' );
+                ?>
+            </p>
+            <?php
+        }
 			?>
 		</div>
 		<?php
