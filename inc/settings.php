@@ -183,9 +183,14 @@ function nukiwp_time_selector( $hour = 'start' ) {
 	$settings = $nuki->get_settings();
 	$options = array();
 	if ( ! empty( $settings['smartlock-managed'] ) ) {
-        if ( empty( $settings[ $hour . '-autolock' ] ) ){
-	        $selected_hour = '00:00';
+        $selected_hour = $settings['start-autolock'];
+        if ('end' === $hour ) {
+            $selected_hour = $settings['end-autolock'];
         }
+		if ( empty( $settings[ $hour . '-autolock' ] ) ) {
+			$selected_hour = '00:00';
+		}
+	}
 
 		foreach ( $hours as $hour ) {
 			foreach ( $minutes as $minute ) {
@@ -193,7 +198,7 @@ function nukiwp_time_selector( $hour = 'start' ) {
 				$options[]      = '<option value="' . esc_attr( $formatted_hour ) . '"' . selected( $selected_hour, $formatted_hour, false ) . '>' . $formatted_hour . '</option>';
 			}
 		}
-	}
+
 	return $options;
 }
 
