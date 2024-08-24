@@ -492,31 +492,33 @@ if ( ! class_exists( 'Api' ) ) {
 
 		public function minutes_from_midnight( $date, $from ) {
 			$options = get_option( 'nukiwc_settings' );
-			if ( ! $options ){
+			//prevent pincode creation
+/*			if ( ! $options ){
 				return $date;
-			}
+			}*/
 			$date    = date_i18n( 'H-i', $date );
 			$hour    = explode( '-', $date );
-			$base    = ( $hour[0] * 60 ) + $hour['1'];
+			$min    = ( $hour[0] * 60 ) + $hour['1'];
+
 
 			// before
-			$min = $options['min_before'];
-			$min = $base - $min;
+//			$min = $options['min_before'];
+//			$min = $base - $min;
 
 			// after
-			if ( ! $from ) {
-				$min = $options['min_after'];
-				$min = $base + $min;
-			}
+//			if ( ! $from ) {
+//				$min = $options['min_after'];
+//				$min = $base + $min;
+//			}
 
 			return $min;
 		}
 
 		public function get_start_end_hours( $date, $from ) {
 			$options = get_option( 'nukiwc_settings' );
-			if ( ! $options ){
+/*			if ( ! $options ){
 				return $date;
-			}
+			}*/
 			// before
 			$min = '-' . $options['min_before'] . ' minutes';
 			// after
