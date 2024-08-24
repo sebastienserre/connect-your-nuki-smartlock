@@ -511,23 +511,11 @@ if ( ! class_exists( 'Api' ) ) {
 		}
 
 		public function get_start_end_hours( $date, $from ) {
-			$options = get_option( 'nukiwc_settings' );
-/*			if ( ! $options ){
-				return $date;
-			}*/
-			// before
-			$min = '-' . $options['min_before'] . ' minutes';
-			// after
-			if ( ! $from ) {
-				$min = '+' . $options['min_after'] . ' minutes';
-			}
 
 			$timezone_from = wp_timezone();
 			$timezone_from = $timezone_from->getName();
 			$newDateTime   = new \DateTime( '@' . $date, new \DateTimeZone( $timezone_from ) );
 			$newDateTime->setTimestamp( $date );
-			$interval = \DateInterval::createFromDateString( $min );
-			$newDateTime->add( $interval );
 			$date = $newDateTime->format( 'c' );
 
 			return $date;
@@ -538,8 +526,7 @@ if ( ! class_exists( 'Api' ) ) {
 			$date          = $this->get_start_end_hours( $date, $from );
 			$timezone_from = wp_timezone();
 			$timezone_from = $timezone_from->getName();
-			$datetime = new \DateTime();
-			$newDateTime = $datetime->createFromFormat( 'U', $date, new \DateTimeZone( $timezone_from ));
+			$newDateTime   = new \DateTime( $date, new \DateTimeZone( $timezone_from ) );
 			$newDateTime->setTimezone( new \DateTimeZone( "UTC" ) );
 			$dateTimeUTC = $newDateTime->format( "c" );
 
