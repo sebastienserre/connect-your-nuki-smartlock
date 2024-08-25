@@ -121,42 +121,42 @@ function nukiwp_enable_autolock() {
 function nukiwp__options_page() {
 
 	?>
-	<form action='options.php' method='post'>
+    <form action='options.php' method='post'>
 
-		<h2><?php esc_html_e( 'Connect your Nuki SmartLock', 'connect-your-nuki-smartlock' ); ?></h2>
+        <h2><?php esc_html_e( 'Connect your Nuki SmartLock', 'connect-your-nuki-smartlock' ); ?></h2>
 
 		<?php
 		settings_fields( 'pluginPage' );
 		do_settings_sections( 'pluginPage' );
 		submit_button();
 		?>
-	</form>
+    </form>
     <div class="nuki-notice notice notice-info">
         <p>
-				<?php
-				printf(
-					/* translators: %1$s is link start tag, %2$s is link end tag. */
-					esc_html__( 'We have noticed that you have been using our plugin for some time. We hope you love it, and we would really appreciate it if you would %1$sgive us a 5 stars rating%2$s.', 'connect-your-nuki-smartlock' ),
-					'<a href="https://wordpress.org/support/plugin/connect-your-nuki-smartlock/reviews?rate=5#new-post">',
-					'</a>'
-				);
-				?>
-			</p>
+			<?php
+			printf(
+			/* translators: %1$s is link start tag, %2$s is link end tag. */
+				esc_html__( 'We have noticed that you have been using our plugin for some time. We hope you love it, and we would really appreciate it if you would %1$sgive us a 5 stars rating%2$s.', 'connect-your-nuki-smartlock' ),
+				'<a href="https://wordpress.org/support/plugin/connect-your-nuki-smartlock/reviews?rate=5#new-post">',
+				'</a>'
+			);
+			?>
+        </p>
     </div>
-        <div class="nuki-notice notice notice-info">
-            <p>
-			    <?php
-			    printf(
-			    /* translators: %1$s is link start tag, %2$s is link end tag. */
-				    esc_html__( 'Do you know you can use %1$sour addon to link a WooCommerce website to one or more Nuki Smartlock%2$s ?', 'connect-your-nuki-smartlock' ),
-				    '<a href="https://nuki-smartlock-for-wp.com/downloads/nuki-smartlock-for-woocommerce">',
-				    '</a>'
-			    );
-			    ?>
-            </p>
+    <div class="nuki-notice notice notice-info">
+        <p>
+			<?php
+			printf(
+			/* translators: %1$s is link start tag, %2$s is link end tag. */
+				esc_html__( 'Do you know you can use %1$sour addon to link a WooCommerce website to one or more Nuki Smartlock%2$s ?', 'connect-your-nuki-smartlock' ),
+				'<a href="https://nuki-smartlock-for-wp.com/downloads/nuki-smartlock-for-woocommerce">',
+				'</a>'
+			);
+			?>
+        </p>
 
-		</div>
-    <?php
+    </div>
+	<?php
 }
 
 /**
