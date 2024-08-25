@@ -8,6 +8,9 @@
 
 namespace Nuki\API;
 
+Use DateTime;
+Use DateTimeZone;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } // Exit if accessed directly.
@@ -491,48 +494,47 @@ if ( ! class_exists( 'Api' ) ) {
 		}
 
 		public function minutes_from_midnight( $date, $from ) {
-			$options = get_option( 'nukiwc_settings' );
-			$date    = date_i18n( 'H-i', $date );
+			$date    = date( 'H-i', $date );
 			$hour    = explode( '-', $date );
-			$min    = ( $hour[0] * 60 ) + $hour['1'];
-
-
-			// before
-//			$min = $options['min_before'];
-//			$min = $base - $min;
-
-			// after
-//			if ( ! $from ) {
-//				$min = $options['min_after'];
-//				$min = $base + $min;
-//			}
+			$min    = ( $hour[0] * 60 ) + intval( $hour['1'] );
 
 			return $min;
 		}
 
-		public function get_start_end_hours( $date, $from ) {
-
-			$timezone_from = wp_timezone();
-			$timezone_from = $timezone_from->getName();
-			$newDateTime   = new \DateTime( '@' . $date, new \DateTimeZone( $timezone_from ) );
-			$newDateTime->setTimestamp( $date );
-			$date = $newDateTime->format( 'c' );
-
-			return $date;
-		}
-
 		//https://techarise.com/convert-local-time-to-utc-in-php/
 		public function convert_to_UTC( $date, $from ) {
-			$date          = $this->get_start_end_hours( $date, $from );
-			$timezone_from = wp_timezone();
-			$timezone_from = $timezone_from->getName();
-			$newDateTime   = new \DateTime( $date, new \DateTimeZone( $timezone_from ) );
-			$newDateTime->setTimezone( new \DateTimeZone( "UTC" ) );
-			$dateTimeUTC = $newDateTime->format( "c" );
+			$tz = wp_timezone();
+			$offset = $this->get_offset();
+			$date = strtotime( $offset, $date );
+			$newDateTime   = new \DateTime( '@' . $date, new \DateTimeZone( $tz->getName() ) );
+			$newDateTime->setTimezone( new \DateTimeZone( $tz->getName() ) );
+			$date = $newDateTime->format( 'c' );
+
+			$newDateTime   = new \DateTime( $date, new \DateTimeZone( 'UTC' ) );
+
+			$dateTimeUTC = $newDateTime->format( 'c' );
 
 			return $dateTimeUTC;
 		}
+		public function get_offset(){
+			$tz = wp_timezone()->getName();
 
+			$dateTimeZoneWebsite = new DateTimeZone($tz);
+			$dateTimeZoneUTC = new DateTimeZone("UTC");
+
+			$dateTimeUTC = new DateTime("now", $dateTimeZoneUTC);
+
+			$offset = $dateTimeZoneWebsite->getOffset($dateTimeUTC) / HOUR_IN_SECONDS;
+
+			if ( $offset > 0 ) {
+				$offset = '-' . $offset .' hours';
+			} else if( $offset < 0 ) {
+				$offset = '+' . $offset .' hours';
+			} else {
+				$offset = '+0 hours';
+			}
+			return $offset;
+		}
 		public function get_times( $start_date, $end_date ) {
 			$times                  = array();
 			$times['allowed_from']  = NukiAPI()->minutes_from_midnight( $start_date, true );
