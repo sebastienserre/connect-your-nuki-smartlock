@@ -529,7 +529,8 @@ if ( ! class_exists( 'Api' ) ) {
 			if ( $offset > 0 ) {
 				$offset = '-' . $offset .' hours';
 			} else if( $offset < 0 ) {
-				$offset = '+' . $offset .' hours';
+				$offset = str_replace( '-', '+', $offset );
+				$offset = $offset .' hours';
 			} else {
 				$offset = '+0 hours';
 			}
