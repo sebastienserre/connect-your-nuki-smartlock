@@ -7,7 +7,7 @@
  * Author URI: https://nuki-smartlock-for-wp.com/
  * Requires at least: 5.8
  * Requires PHP: 7.4
- * Version: 1.3.13
+ * Version: 1.3.14
  * License: GPL v3 or later
  * License URI: https://www.gnu.org/licenses/gpl-3.0.txt
  *
