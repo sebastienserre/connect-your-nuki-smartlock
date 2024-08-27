@@ -46,7 +46,10 @@ Visit [https://nuki-smartlock-for-wp.com/30e-discount-on-your-nuki-smartlock]( h
 2. Dashboard Widget
 
 == Changelog ==
-= 1.3.14 -- 25 August 2024 =
+= 1.3.15 -- 27 August 2024 =
+- Fix an issue where Dashboard widget was hidden
+
+= 1.3.14 -- 27 August 2024 =
 - Add 2 notices about plugin rating on wp.org & "ads" to Nuki Smartlock for WooCommerce
 - Fix an issue on booking hour in timezone before UTC
 - Rename the pincode name sent to Nuki Web
