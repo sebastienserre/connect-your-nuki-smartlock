@@ -52,7 +52,7 @@ class Dashboard {
 
 		$smartlocks = $nuki->get_smartlocks();
 		$options = get_option( 'nukiwp__settings' );
-        if ( ! $options ){
+        if ( $options ){
 		?>
 		<div class="nuki_dashboard">
 			<?php
