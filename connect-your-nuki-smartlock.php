@@ -51,6 +51,8 @@ if ( ! class_exists( 'Connect_Nuki_Smartlock' ) ) {
 			define( 'NUKIWP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 			define( 'NUKIWP_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 			define( 'NUKIWP_PLUGIN_DIR', untrailingslashit( NUKIWP_PLUGIN_PATH ) );
+			define( 'NUKIWP_MIN_WP_VERSION', '5.8' );
+			define( 'NUKIWP_MIN_PHP_VERSION', '7.4' );
 		}
 
 		public function load_files() {
