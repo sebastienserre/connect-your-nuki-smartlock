@@ -5,7 +5,7 @@ Donate link: https://nuki-smartlock-for-wp.com/product/nuki-for-wordpress
 Requires at least: 5.8
 Tested up to: 6.6
 Requires PHP: 7.4
-Stable tag: 1.3.14
+Stable tag: 1.3.16
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -18,6 +18,10 @@ A Dashboard Widget allow you to quickly see your Smartlocks state (battery level
 ## WooCommerce Bookings & Yith Booking and Appointment Addons ##
 A WooCommerce Bookings & Yith Booking and Appointment addon is available. It will allow you to create & send to the Nuki Keypad a pin code each time a booking order is completed on your WordPress + WooCommerce website.
 Available at [Nuki Smartlock for WordPress](https://nuki-smartlock-for-wp.com/).
+
+## Gravity Forms Addon ##
+A Gravity Forms addons is available at [Nuki Smartlock for WordPress](https://nuki-smartlock-for-wp.com/).
+It will allow you to send pincode to a Nuki Keypad from a Gravity Forms form.
 
 == Frequently Asked Questions ==
 = How to connect my Smartlock ? =
@@ -46,6 +50,9 @@ Visit [https://nuki-smartlock-for-wp.com/30e-discount-on-your-nuki-smartlock]( h
 2. Dashboard Widget
 
 == Changelog ==
+= 1.3.16 -- 06 september 2024 =
+- Add needed constant to prepare the new Gravity Form addon.
+
 = 1.3.15 -- 27 August 2024 =
 - Fix an issue where Dashboard widget was hidden
 
