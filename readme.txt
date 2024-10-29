@@ -1,11 +1,11 @@
-=== Connect Nuki Smartlock ===
+=== Connect your Nuki Smartlock! ===
 Contributors: sebastienserre
 Tags: smartlock,automation,nuki,bookings
 Donate link: https://nuki-smartlock-for-wp.com/product/nuki-for-wordpress
 Requires at least: 5.8
-Tested up to: 6.6
+Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.3.16
+Stable tag: 1.3.17
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -50,6 +50,10 @@ Visit [https://nuki-smartlock-for-wp.com/30e-discount-on-your-nuki-smartlock]( h
 2. Dashboard Widget
 
 == Changelog ==
+= 1.3.17 -- 29 october 2024 =
+- Use of Plugin Check -- fi issues
+- Tested up to WP 6.7
+
 = 1.3.16 -- 06 september 2024 =
 - Add needed constant to prepare the new Gravity Form addon.
 

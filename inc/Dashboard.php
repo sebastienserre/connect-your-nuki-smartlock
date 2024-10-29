@@ -183,7 +183,7 @@ class Dashboard {
             ?>
             <p>
                 <?php
-                _e( 'No smartlock set in the Nuki settings', 'connect-your-nuki-smartlock' );
+                esc_attr_e( 'No smartlock set in the Nuki settings', 'connect-your-nuki-smartlock' );
                 ?>
             </p>
             <?php
@@ -201,7 +201,7 @@ class Dashboard {
 	 */
 	public function generate_pincode() {
 		$nuki = new Api();
-		if ( empty( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'action' ) ) {
+		if ( empty( wp_unslash( $_GET['_wpnonce'] ) ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'action' ) ) {
 			return;
 		}
 		if ( ! empty( $_GET['action'] ) && 'generate-pin' === $_GET['action'] && ! empty( $_GET['id'] ) ) {

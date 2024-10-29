@@ -494,7 +494,7 @@ if ( ! class_exists( 'Api' ) ) {
 		}
 
 		public function minutes_from_midnight( $date, $from ) {
-			$date    = date( 'H-i', $date );
+			$date    = gmdate( 'H-i', $date );
 			$hour    = explode( '-', $date );
 			$min    = ( $hour[0] * 60 ) + intval( $hour['1'] );
 
