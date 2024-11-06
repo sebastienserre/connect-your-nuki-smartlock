@@ -201,7 +201,7 @@ class Dashboard {
 	 */
 	public function generate_pincode() {
 		$nuki = new Api();
-		if ( empty( wp_unslash( $_GET['_wpnonce'] ) ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'action' ) ) {
+		if ( isset( $_GET['_wpnonce'] ) && empty( wp_unslash( $_GET['_wpnonce'] ) ) ) {
 			return;
 		}
 		if ( ! empty( $_GET['action'] ) && 'generate-pin' === $_GET['action'] && ! empty( $_GET['id'] ) ) {
