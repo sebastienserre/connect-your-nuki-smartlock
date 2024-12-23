@@ -205,13 +205,9 @@ function nukiwp_time_selector( $hour = 'start' ) {
 	$nuki = new \Nuki\API\Api();
 	$settings = $nuki->get_settings();
 	$options = array();
-	if ( empty( $settings['start-autolock' ] ) ){
-		$settings['start-autolock'] = '00:00';
-	}
-	$selected_hour = $settings['start-autolock'];
 	if ( ! empty( $settings['smartlock-managed'] ) ) {
-
-		if ('end' === $hour ) {
+        $selected_hour = $settings['start-autolock'];
+        if ('end' === $hour ) {
             $selected_hour = $settings['end-autolock'];
         }
 		if ( empty( $settings[ $hour . '-autolock' ] ) ) {
@@ -255,66 +251,4 @@ function nukiwp__manage_smartlock() {
 		?>
     </select>
 	<?php
-}
-
-/**
- * Add admin menu.
- *
- * @return void
- */
-function nuki_wp_add_admin_menu() {
-	add_submenu_page( 'connect_your_nuki_smartlock', __( 'Licenses', 'connect-your-nuki-smartlock' ), __( 'Licenses', 'connect-your-nuki-smartlock' ), 'manage_options', 'connect_nuki_licenses', 'nuki_wp_licences_page' );
-}
-
-add_action( 'admin_menu', 'nuki_wp_add_admin_menu', 15 );
-
-/**
- * Create the option page.
- *
- * @return void
- */
-function nuki_wp_licences_page() {
-	?>
-    <form action='options.php' method='post'>
-
-        <h2><?php esc_html_e( 'Connect Nuki Licenses', 'connect-your-nuki-smartlock' ); ?></h2>
-
-		<?php
-		if ( defined( 'NUKIGF_VERSION' ) || defined( 'NUKIWC_VERSION' ) ) {
-			settings_fields( 'License-form' );
-			do_settings_sections( 'License-form' );
-			submit_button();
-		} else {
-			?>
-            <div class="nuki-ads">
-                <a href="https://nuki-smartlock-for-wp.com/">
-					<?php
-					esc_html_e( 'Visit our shop and get WooCommerce add-on', 'connect-your-nuki-smartlock' );
-					?>
-                </a>
-            </div>
-			<?php
-		}
-		?>
-
-    </form>
-	<?php
-}
-
-add_action( 'admin_init', 'nuki_wp_settings_init' );
-/**
- * Register settings.
- *
- * @return void
- */
-function nuki_wp_settings_init() {
-
-	add_settings_section(
-		'nuki_wp__License-form_section',
-		'',
-		'',
-		'License-form'
-	);
-
-
 }
