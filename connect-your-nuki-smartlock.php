@@ -7,7 +7,7 @@
  * Author URI: https://nuki-smartlock-for-wp.com/
  * Requires at least: 6.0
  * Requires PHP: 8.0
- * Version: 1.4
+ * Version: 1.4.1
  * License: GPL v3 or later
  * License URI: https://www.gnu.org/licenses/gpl-3.0.txt
  *
@@ -52,7 +52,7 @@ if ( ! class_exists( 'Connect_Nuki_Smartlock' ) ) {
 			define( 'NUKIWP_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 			define( 'NUKIWP_PLUGIN_DIR', untrailingslashit( NUKIWP_PLUGIN_PATH ) );
 			define( 'NUKIWP_MIN_WP_VERSION', '5.8' );
-			define( 'NUKIWP_MIN_PHP_VERSION', '7.4' );
+			define( 'NUKIWP_MIN_PHP_VERSION', '8.0' );
 		}
 
 		public function load_files() {
