@@ -51,6 +51,9 @@ class Dashboard {
 		$nuki = new Api();
 
 		$smartlocks = $nuki->get_smartlocks();
+        if ( empty( $smartlocks ) ) {
+            return;
+        }
 		$options = get_option( 'nukiwp__settings' );
         if ( $options ){
 		?>
@@ -60,7 +63,7 @@ class Dashboard {
 				$data = $smartlock;
 				// Generate classname for Battery level.
 				$battery_state = 'ok';
-				if ( $data['state']['batteryCritical'] ) {
+				if ( ! empty( $data['state']['batteryCritical'] ) ) {
 					$battery_state = 'critical';
 				}
 
@@ -206,14 +209,15 @@ class Dashboard {
 		}
 
 		// Check if we have a valid nonce
-		if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'action' ) ) {
+		if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field(
+				wp_unslash( $_GET['_wpnonce'] )), 'action' ) ) {
 			// Either the nonce is missing or invalid
 			return;
 		}
 
 
 		$nuki = new Api();
-		if ( empty( wp_unslash( $_GET['_wpnonce'] ) ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'action' ) ) {
+		if ( empty( sanitize_text_field(  wp_unslash( $_GET['_wpnonce'] ) ) ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ), 'action' ) ) ) {
 			return;
 		}
 		if ( ! empty( $_GET['action'] ) && 'generate-pin' === $_GET['action'] && ! empty( $_GET['id'] ) ) {
@@ -243,15 +247,15 @@ class Dashboard {
 	 * @return void
 	 */
 	public function delete_pincode() {
-		if ( empty( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'action' ) ) {
+		if ( empty( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'action' ) ) {
 			return;
 		}
 		if ( empty( $_GET['action'] ) || 'delete-pin' !== $_GET['action'] || empty( $_GET['pin_name'] ) ) {
 			return;
 		}
 		$options = get_option( 'nukiwp__settings' );
-		if ( isset( $options['ondemand-pinlist'][ sanitize_key( $_GET['id'] ) ][ sanitize_text_field( $_GET['pin_name'] ) ] ) ) {
-			$delete = NukiAPI()->delete_auth( sanitize_text_field( $_GET['pin_name'] ) );
+		if ( isset( $options['ondemand-pinlist'][ sanitize_key( $_GET['id'] ) ][ sanitize_text_field( wp_unslash( $_GET['pin_name'] ) ) ] ) ) {
+			$delete = NukiAPI()->delete_auth( sanitize_text_field( wp_unslash( $_GET['pin_name'] ) ) );
 			if ( $delete ) {
 				unset( $options['ondemand-pinlist'][ sanitize_key( $_GET['id'] ) ][ sanitize_text_field( $_GET['pin_name'] ) ] );
 				update_option( 'nukiwp__settings', $options );
@@ -270,7 +274,7 @@ class Dashboard {
 		if ( empty( $_GET['action'] ) ) {
 			return false;
 		}
-		if ( ! empty( $_GET['_wpnonce'] ) && wp_verify_nonce( $_GET['_wpnonce'], 'action' ) && empty( $_GET['action'] ) || 'unlock' === $_GET['action'] || 'lock' === $_GET['action'] && ! empty( $_GET['id'] ) ) {
+		if ( ! empty( sanitize_text_field( wp_unslash(  $_GET['_wpnonce'] ) ) ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'action' ) && empty( $_GET['action'] ) || 'unlock' === $_GET['action'] || 'lock' === $_GET['action'] && ! empty( $_GET['id'] ) ) {
 			if ( 'lock' === $_GET['action'] ) {
 				$nukiwp_api->lock( sanitize_key( $_GET['id'] ) );
 			}
