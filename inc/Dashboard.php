@@ -200,6 +200,18 @@ class Dashboard {
 	 * @return void
 	 */
 	public function generate_pincode() {
+		// Check if we have an action parameter
+		if ( ! isset( $_GET['action'] ) ) {
+			return;
+		}
+
+		// Check if we have a valid nonce
+		if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'action' ) ) {
+			// Either the nonce is missing or invalid
+			return;
+		}
+
+
 		$nuki = new Api();
 		if ( empty( wp_unslash( $_GET['_wpnonce'] ) ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'action' ) ) {
 			return;
