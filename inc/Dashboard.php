@@ -274,6 +274,9 @@ class Dashboard {
 		if ( empty( $_GET['action'] ) ) {
 			return false;
 		}
+		if ( empty( $_GET['_wpnonce'] ) ) {
+			return false;
+		}
 		if ( ! empty( sanitize_text_field( wp_unslash(  $_GET['_wpnonce'] ) ) ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'action' ) && empty( $_GET['action'] ) || 'unlock' === $_GET['action'] || 'lock' === $_GET['action'] && ! empty( $_GET['id'] ) ) {
 			if ( 'lock' === $_GET['action'] ) {
 				$nukiwp_api->lock( sanitize_key( $_GET['id'] ) );
