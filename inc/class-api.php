@@ -408,6 +408,7 @@ if ( ! class_exists( 'Api' ) ) {
 				case 0:
 				case 3:
 				case 4:
+				case 5:
 					switch ( $code ) {
 						case 0:
 							$msg = __( 'uncalibrated', 'connect-your-nuki-smartlock' );
