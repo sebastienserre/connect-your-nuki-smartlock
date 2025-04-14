@@ -70,7 +70,7 @@ class Dashboard {
 				$generate_link = add_query_arg(
 					array(
 						'action'   => 'generate-pin',
-						'_wpnonce' => wp_create_nonce( 'action' ),
+						'_wpnonce' => wp_create_nonce( 'generate-pin' ),
 						'id' => $smartlock['smartlockId'],
 
 					),
@@ -210,14 +210,16 @@ class Dashboard {
 
 		// Check if we have a valid nonce
 		if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field(
-				wp_unslash( $_GET['_wpnonce'] )), 'action' ) ) {
+				wp_unslash( $_GET['_wpnonce'] )), 'generate-pin' ) ) {
 			// Either the nonce is missing or invalid
 			return;
 		}
 
 
 		$nuki = new Api();
-		if ( empty( sanitize_text_field(  wp_unslash( $_GET['_wpnonce'] ) ) ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ), 'action' ) ) ) {
+        $nonce = empty(  $_GET['_wpnonce']  ) ;
+        $nonce_verify = wp_verify_nonce( $_GET['_wpnonce'], 'generate-pin'   );
+		if ( $nonce && ! $nonce_verify ) {
 			return;
 		}
 		if ( ! empty( $_GET['action'] ) && 'generate-pin' === $_GET['action'] && ! empty( $_GET['id'] ) ) {
@@ -234,6 +236,8 @@ class Dashboard {
 				'start'   => wp_date( 'c', time() ),
 				'end'     => wp_date( 'c', time() + 24 * HOUR_IN_SECONDS ),
 				'pincode' => $pin_code,
+                'allowedFromTime' => $nuki->minutes_from_midnight( time() ),
+                'allowedUntilTime' => $nuki->minutes_from_midnight( time() + DAY_IN_SECONDS ),
 			);
 			$nuki->send_pin_to_keypad( $pin_data, sanitize_key( $_GET['id'] ) );
 			update_option( 'nukiwp__settings', $options );
